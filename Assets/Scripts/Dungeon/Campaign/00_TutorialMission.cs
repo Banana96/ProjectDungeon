@@ -1,6 +1,6 @@
 ﻿namespace Campaign {
 	public class TutorialMission : DungeonBuilder {
-		public TutorialMission(Dungeon d) : base(d) {}
+		public TutorialMission(Dungeon d) : base(d) { }
 
 		protected override void Work() {
 			var spawnArea = new Area(1, 1, 3, 3);
@@ -29,7 +29,7 @@
 					new Position(14, 9)
 				)
 				.area(monsterArea)
-				.monster("m_dummy", monsterArea.center, Direction.East)
+				.monster("m_dummy", monsterArea.center)
 				.finish();
 		}
 	}

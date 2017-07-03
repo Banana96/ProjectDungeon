@@ -2,41 +2,37 @@
 using System.Collections.Generic;
 using Random = System.Random;
 
+/// <summary>Builds procedurally generated dungeon from given or random seed.</summary>
 public class DungeonGenerator : DungeonBuilder {
-	public string seed = "";
-
-	private readonly List<FeatureGenerator> features = new List<FeatureGenerator>();
-	private Random rng { get; set; }
-
-	public DungeonGenerator(Dungeon d) : base(d) {}
+	public DungeonGenerator(Dungeon d) : base(d) { }
 
 	protected override void Work() {
+		const string seed = "";
 		long seedResult;
 
 		if(seed.Length > 0) {
 			if(!long.TryParse(seed, out seedResult)) {
-                foreach(var c in seed) {
-			        seedResult = seedResult + c;
-			    }
+				foreach(var c in seed) {
+					seedResult = seedResult + c;
+				}
 			}
 		} else {
 			seedResult = new Random().Next();
-			seed = seedResult.ToString();
 		}
 
-		rng = new Random((int)seedResult);
+		var rng = new Random((int) seedResult);
 
 		int width = rng.Next(Dungeon.MinSize, Dungeon.MaxSize),
-            height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
+			height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
 
 		dungeon.InitBlockArray(width, height);
 
-		features.AddRange(new FeatureGenerator[] {
+		var features = new List<FeatureGenerator>(new FeatureGenerator[] {
 			new AreaGenerator(),
 			new CorridorGenerator(),
 			new AreaLinker(),
 			new DeadEndsRemover(),
-			new PlayerSpawner()
+			new RandomPlayerSpawner()
 //			new BlockDecorator(),
 //			new ChestGenerator()
 		});

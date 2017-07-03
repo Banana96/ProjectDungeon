@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour {
 	public PlayMode playMode;
 
 	public void Start() {
-		var dungeonObj = new GameObject("Dungeon") { tag = "Dungeon" };
+		var dungeonObj = new GameObject("Dungeon") {tag = "Dungeon"};
 		var dungeon = dungeonObj.AddComponent<Dungeon>();
 
 		if(playMode == PlayMode.Campaign) {

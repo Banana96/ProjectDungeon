@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>Camera animation used to indicate player rotation.</summary>
 public class RotateCamera : CameraAnimation {
-	private static float rotateRate = 4f;
+	private const float rotateRate = 4f;
 
 	private float progress;
 	private float currentRot;

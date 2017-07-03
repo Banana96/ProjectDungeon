@@ -2,7 +2,9 @@
 	protected Entity caller { get; private set; }
 	protected object target { get; set; }
 
-	public bool isCallerPlayer { get { return caller is Player; } }
+	public bool isCallerPlayer {
+		get { return caller is Player; }
+	}
 
 	protected EntityRequest(Entity e, object dir = null) {
 		caller = e;

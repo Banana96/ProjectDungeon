@@ -1,5 +1,7 @@
 ﻿using System;
 
+/// <summary>Decorates block with <c>TextureSet</c> from dungeon</summary>
+/// <see cref="Dungeon.textures"/>
 public class BlockDecorator : FeatureGenerator {
 	private const int DecorationChance = 12;
 

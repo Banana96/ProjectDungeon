@@ -1,4 +1,5 @@
-﻿public class DungeonBuilder {
+﻿/// <summary>Abstracted class for automated dungeon in-game init.</summary>
+public abstract class DungeonBuilder {
 	protected readonly Dungeon dungeon;
 
 	protected DungeonBuilder(Dungeon d) {
@@ -14,5 +15,6 @@
 		dungeon.autoInitPlayer();
 	}
 
-	protected virtual void Work() {}
+	/// <summary>Actual algorithm to generate complete dungeon.</summary>
+	protected abstract void Work();
 }

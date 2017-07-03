@@ -1,5 +1,6 @@
 ﻿using System;
 
+/// <summary>Generates monsters in dungeon.</summary>
 public class MonsterGenerator : FeatureGenerator {
 	private int mobLimit { get; set; }
 	private int mobCount { get; set; }
@@ -16,8 +17,8 @@ public class MonsterGenerator : FeatureGenerator {
 		for(var i = 0; i <= mobLimit; i++) {
 			Position pos;
 
-			do pos = new Position(rng.Next(0, dungeon.Width), rng.Next(0, dungeon.Height));
-			while(dungeon.getBlock(pos) != null || dungeon.isNearSpecialBlock(pos) || dungeon.getEntity(pos) != null);
+			do pos = new Position(rng.Next(0, dungeon.Width), rng.Next(0, dungeon.Height)); while(
+				dungeon.getBlock(pos) != null || dungeon.isNearSpecialBlock(pos) || dungeon.getEntity(pos) != null);
 
 			dungeon.spawnMonster(pos, U.RandArrElem(mobTypes, rng));
 			mobCount++;

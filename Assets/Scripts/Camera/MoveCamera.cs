@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>Camera animation used to indicate player movement.</summary>
 public class MoveCamera : CameraAnimation {
 	private const float moveRate = 2f;
 	private const float signRange = 0.03f;
@@ -13,7 +14,7 @@ public class MoveCamera : CameraAnimation {
 	private Vector3 initPos;
 	private Vector3 currentPos;
 	private Vector3 destPos;
-	
+
 	public MoveCamera(Camera cam, Direction d) : base(cam) {
 		dir = d;
 		sign = Random.Range(-signRange, signRange);

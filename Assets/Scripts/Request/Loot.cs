@@ -1,5 +1,7 @@
 ﻿public class Loot : EntityRequest {
-	private Direction direction { get { return target as Direction; } }
+	private Direction direction {
+		get { return target as Direction; }
+	}
 
 	public Loot(Entity e, Direction dir = null) : base(e, dir) {
 		if(target == null) {
@@ -21,11 +23,7 @@
 		return false;
 	}
 
-	public override void onValid(Dungeon d) {
-		
-	}
+	public override void onValid(Dungeon d) { }
 
-	public override void onInvalid(Dungeon d) {
-		
-	}
+	public override void onInvalid(Dungeon d) { }
 }

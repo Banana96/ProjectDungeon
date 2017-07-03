@@ -1,12 +1,14 @@
 ﻿using System;
 
+/// <summary>Generates <c>Area</c> objects for generated dungeon.</summary>
 public class AreaGenerator : FeatureGenerator {
-	public static readonly int MinAreaSize = 3;
-	public static readonly int MaxAreaSize = 5;
-	public static readonly int MinAreaTries = 32;
-	public static readonly int MaxAreaTries = 64;
+	private const int MinAreaSize = 3;
+	private const int MaxAreaSize = 5;
+	private const int MinAreaTries = 32;
+	private const int MaxAreaTries = 64;
 
-	public Area randomArea(Dungeon dungeon, Random rng) {
+	/// <summary>Generate random area.</summary>
+	private Area randomArea(Dungeon dungeon, Random rng) {
 		int w = rng.Next(MinAreaSize, MaxAreaSize),
 			h = rng.Next(MinAreaSize, MaxAreaSize);
 

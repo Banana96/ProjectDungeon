@@ -4,9 +4,7 @@ public class Inventory {
 	private List<ItemSlot> slots;
 
 	public int totalSlotCount {
-		get {
-			return slots.Count;
-		}
+		get { return slots.Count; }
 	}
 
 	public int freeSlotCount {

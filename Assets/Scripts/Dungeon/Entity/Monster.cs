@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>Monster is an entity, that can hurt player. It's build from <c>MonsterTemplate</c>.</summary>
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Monster : Entity {
+	/// <summary>Try to load <c>MonsterTemplate</c> from available resources.</summary>
 	public static MonsterTemplate GetTemplate(string id) {
 		var template = Resources.Load<MonsterTemplate>("Entities/" + id);
 
@@ -12,6 +14,7 @@ public class Monster : Entity {
 		return template;
 	}
 
+	/// <summary>Set template, initialize proerties and model from template data.</summary>
 	public void Build(MonsterTemplate temp) {
 		if(temp == null) {
 			Debug.LogError("Given null MonsterTemplate");

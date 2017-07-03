@@ -1,6 +1,7 @@
 ﻿using Random = System.Random;
 
-public class PlayerSpawner : FeatureGenerator {
+/// <summary>Spawn player in random free position in a dungeon.</summary>
+public class RandomPlayerSpawner : FeatureGenerator {
 	private const int MaxTries = 32;
 
 	public override bool generate(Dungeon dungeon, Random rng) {
@@ -13,7 +14,7 @@ public class PlayerSpawner : FeatureGenerator {
 			);
 
 			if(dungeon.getBlock(pos) != null) {
-				dungeon.setPlayerSpawn(pos);
+				dungeon.spawnPlayer(pos, null);
 				break;
 			}
 

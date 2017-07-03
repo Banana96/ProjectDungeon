@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
+/// <summary>Used to make attached Light component to flicker.</summary>
 public class LightFlicker : MonoBehaviour {
-	[Range(45, 135)]
-	public int MinimumAngle = 75;
+	[Range(45, 135)] public int MinimumAngle = 75;
 
-	[Range(50, 140)]
-	public int MaximumAngle = 80;
+	[Range(50, 140)] public int MaximumAngle = 80;
 
-	[Range(1f, 2f)]
-	public float ColorFactor = 1.25f;
+	[Range(1f, 2f)] public float ColorFactor = 1.25f;
 
 	private Light camLight;
 

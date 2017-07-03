@@ -5,7 +5,9 @@ public class Chest : Entity {
 	public Inventory content = new Inventory(18);
 	public bool isLocked;
 
-	private Animator animator { get { return GetComponent<Animator>(); } }
+	private Animator animator {
+		get { return GetComponent<Animator>(); }
+	}
 
 	void Awake() {
 		var box = new GameObject("Box");
@@ -16,7 +18,7 @@ public class Chest : Entity {
 
 		var boxMr = box.AddComponent<MeshRenderer>();
 		boxMr.sharedMaterial = Resources.Load<Material>("Materials/Chest1Box");
-		
+
 		var cover = new GameObject("Cover");
 		cover.transform.parent = transform;
 
@@ -27,11 +29,20 @@ public class Chest : Entity {
 		coverMr.sharedMaterial = Resources.Load<Material>("Materials/Chest1Cover");
 	}
 
-    private void animUnlock() { animator.Play("Chest_Unlock"); }
+	/// <summary>Play chest unlocking animation.</summary>
+	private void animUnlock() {
+		animator.Play("Chest_Unlock");
+	}
 
-	private void animOpen() { animator.Play("Chest_Opening"); }
-	
-	private void animClose() { animator.Play("Chest_Closing"); }
+	/// <summary>Play chest opening animation.</summary>
+	private void animOpen() {
+		animator.Play("Chest_Opening");
+	}
+
+	/// <summary>Play chest closing animation.</summary>
+	private void animClose() {
+		animator.Play("Chest_Closing");
+	}
 
 	public override void pushRequest() {
 		request = null;

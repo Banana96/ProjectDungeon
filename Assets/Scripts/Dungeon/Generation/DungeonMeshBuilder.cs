@@ -4,37 +4,43 @@ using UnityEngine.Rendering;
 
 public class DungeonMeshBuilder {
 	private readonly Vector3[][] QuadVertices = {
-		new[] { // North
+		new[] {
+			// North
 			new Vector3(-0.5f, -0.5f, 0.5f),
 			new Vector3(-0.5f, 1f, 0.5f),
 			new Vector3(0.5f, 1f, 0.5f),
 			new Vector3(0.5f, -0.5f, 0.5f)
 		},
-		new[] { // East
+		new[] {
+			// East
 			new Vector3(0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, 1f, 0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(0.5f, -0.5f, -0.5f)
 		},
-		new[] { // South
+		new[] {
+			// South
 			new Vector3(0.5f, -0.5f, -0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, -0.5f, -0.5f)
 		},
-		new[] { // West
+		new[] {
+			// West
 			new Vector3(-0.5f, -0.5f, -0.5f),
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, 1f, 0.5f),
 			new Vector3(-0.5f, -0.5f, 0.5f)
 		},
-		new[] { // Floor
+		new[] {
+			// Floor
 			new Vector3(-0.5f, -0.5f, -0.5f),
 			new Vector3(-0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, -0.5f, -0.5f)
 		},
-		new[] { // Ceiling
+		new[] {
+			// Ceiling
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(0.5f, 1f, 0.5f),
@@ -80,7 +86,7 @@ public class DungeonMeshBuilder {
 			new Vector2(1, 0)
 		};
 
-		m.triangles = new[] { 0, 1, 2, 0, 2, 3 };
+		m.triangles = new[] {0, 1, 2, 0, 2, 3};
 
 		return m;
 	}

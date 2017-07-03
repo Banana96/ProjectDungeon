@@ -2,6 +2,7 @@
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>Spawns chests in dungeon.</summary>
 public class ChestGenerator : FeatureGenerator {
 	private static readonly int SpawnChance = 50;
 

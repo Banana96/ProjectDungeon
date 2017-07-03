@@ -5,11 +5,13 @@ using UnityEngine.UI;
 public class PlayerInterface : MonoBehaviour {
 	private Dungeon dungeon;
 	private Player player;
-	
+
 	private Camera cam;
 	private CameraAnimation camAnim;
 
-	private bool animationFinished { get { return camAnim == null; } }
+	private bool animationFinished {
+		get { return camAnim == null; }
+	}
 
 	public Response requestResponse;
 

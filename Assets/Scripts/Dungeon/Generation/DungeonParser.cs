@@ -23,10 +23,18 @@ public class DungeonParser : DungeonBuilder {
 			Direction dir;
 
 			switch(d) {
-				case 'N': dir = Direction.North; break;
-				case 'E': dir = Direction.East; break;
-				case 'S': dir = Direction.South; break;
-				case 'W': dir = Direction.West; break;
+				case 'N':
+					dir = Direction.North;
+					break;
+				case 'E':
+					dir = Direction.East;
+					break;
+				case 'S':
+					dir = Direction.South;
+					break;
+				case 'W':
+					dir = Direction.West;
+					break;
 				default: continue;
 			}
 
@@ -45,12 +53,24 @@ public class DungeonParser : DungeonBuilder {
 			int dir;
 
 			switch(d) {
-				case 'N': dir = Direction.North.Num; break;
-				case 'E': dir = Direction.East.Num; break;
-				case 'S': dir = Direction.South.Num; break;
-				case 'W': dir = Direction.West.Num; break;
-				case 'F': dir = 4; break;
-				case 'C': dir = 5; break;
+				case 'N':
+					dir = Direction.North.Num;
+					break;
+				case 'E':
+					dir = Direction.East.Num;
+					break;
+				case 'S':
+					dir = Direction.South.Num;
+					break;
+				case 'W':
+					dir = Direction.West.Num;
+					break;
+				case 'F':
+					dir = 4;
+					break;
+				case 'C':
+					dir = 5;
+					break;
 				default: continue;
 			}
 
@@ -114,9 +134,11 @@ public class DungeonParser : DungeonBuilder {
 			var texture = 0;
 
 			if(!int.TryParse(texArg, out texture)) {
-				if(texArg == "N") { //None
+				if(texArg == "N") {
+					//None
 					texture = -1;
-				} else if(texArg == "D") { //Default
+				} else if(texArg == "D") {
+					//Default
 					texture = 0;
 				}
 			}
@@ -124,7 +146,7 @@ public class DungeonParser : DungeonBuilder {
 			foreach(var wall in walls) {
 				block.setTexture(texture, wall);
 			}
-		}		
+		}
 	}
 
 	private void SetBlockPassable(string xArg, string yArg, string wallArg, string boolArg = "T") {

@@ -1,12 +1,15 @@
-﻿public class Block {
-	public sealed class Special {
-		public static readonly int Door = 0;
-	}
-
+﻿/// <summary>Represents a single block cell in dungeon.</summary>
+public class Block {
+ /// <summary>Texture IDs (0 is default, -1 is none).</summary>
 	private readonly int[] textures = { 0, 0, 0, 0, 0, 0 };
+
+ /// <summary>Is side of block special.</summary>
 	private readonly bool[] special = { false, false, false, false };
+
+ /// <summary>Is side of block passable.</summary>
 	private readonly bool[] passable = { false, false, false, false };
 
+ /// <summary>Count textured walls of this block.</summary>
 	private int wallCount {
 		get {
 			var count = 0;
@@ -21,6 +24,7 @@
 		}
 	}
 
+ /// <summary>Count passable sides of this block.</summary>
 	public int passableCount {
 		get {
 			var count = 0;
@@ -35,6 +39,7 @@
 		}
 	}
 
+ /// <summary>Count textured sides of this block.</summary>
 	public int textureCount {
 		get {
 			var count = wallCount;
@@ -45,6 +50,7 @@
 		}
 	}
 
+ /// <summary>Get ID of texture on the specified side of block.</summary>
 	private int getTexture(int wall) {
 		if(wall <= 0 & wall > 6) {
 			return textures[wall];
@@ -52,31 +58,38 @@
 		return -1;
 	}
 
+ /// <summary>Get ID of texture on the specified wall.</summary>
 	private int getTexture(Direction dir) {
 		return getTexture(dir.Num);
 	}
 
+ /// <summary>Get all texture IDs.</summary>
 	public int[] getTextures() {
 		return textures;
 	}
 
+ /// <summary>Is side textured</summary>
 	public bool hasTexture(int wall) {
 		return getTexture(wall) != -1;
 	}
 
+ /// <summary>Is wall textured</summary>
 	public bool hasTexture(Direction dir) {
 		return getTexture(dir.Num) != -1;
 	}
 
+ /// <summary>Is texture ID on wall equal to 0.</summary>
 	public bool hasDefaultTexture(Direction dir) {
 		return getTexture(dir) == 0;
 	}
 
+ /// <summary>Set side texture.</summary>
 	public Block setTexture(int textureId, int wall) {
 		textures[wall] = textureId;
 		return this;
 	}
 
+ /// <summary>Set wall textures.</summary>
 	public Block setTexture(int textureId, params Direction[] dirs) {
 		foreach(var d in dirs) {
 			textures[d.Num] = textureId;
@@ -85,10 +98,12 @@
 		return this;
 	}
 
+ /// <summary>Set default texture.</summary>
 	public Block setTexture(params Direction[] dirs) {
 		return setTexture(0, dirs);
 	}
 
+ /// <summary>Set all walls texture</summary>
 	public Block setTextures(int textureId = 0) {
 		return setTexture(textureId, Direction.All);
 	}

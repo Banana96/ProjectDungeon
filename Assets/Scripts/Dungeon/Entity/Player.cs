@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class Player : Entity {
+	/// <summary>Amount of keys to unlock chests.</summary>
 	public int keys = 0;
 
 	private void Awake() {

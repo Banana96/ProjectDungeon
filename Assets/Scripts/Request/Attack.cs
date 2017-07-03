@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
 public class Attack : EntityRequest {
-	private Direction direction { get { return target as Direction; } }
+	private Direction direction {
+		get { return target as Direction; }
+	}
 
 	public Attack(Entity e, Direction dir = null) : base(e, dir) {
 		if(dir == null) {
@@ -37,9 +39,9 @@ public class Attack : EntityRequest {
 			var dmg = targetEntity.receiveHit(caller);
 
 			Debug.Log(targetEntity.publicName +
-				(targetEntity.invincible ?
-					" took " + dmg + " damage" :
-					"'s health: " + targetEntity.currentHealth + "/" + targetEntity.maxHealth)
+					(targetEntity.invincible
+						? " took " + dmg + " damage"
+						: "'s health: " + targetEntity.currentHealth + "/" + targetEntity.maxHealth)
 			);
 		}
 	}

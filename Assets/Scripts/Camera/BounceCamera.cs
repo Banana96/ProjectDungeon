@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>Camera animation used to indicate player bounce from wall or an action.</summary>
 public class BounceCamera : CameraAnimation {
 	private const float moveRate = 15f;
 	private const float fastMoveRate = 35f;
 
-	private bool fastMove;
+	private readonly bool fastMove;
 	private float progress;
 	private Vector3 initPos;
 	private Vector3 currentPos;
@@ -17,7 +18,7 @@ public class BounceCamera : CameraAnimation {
 		currentPos = new Vector3(initPos.x, initPos.y, initPos.z);
 		destPos = new Vector3(initPos.x, initPos.y, initPos.z) + new Vector3(d.UX * 0.1f, 0, d.UZ * 0.1f);
 	}
-	
+
 	public override void Update() {
 		progress = Mathf.Clamp(progress + ((fastMove ? fastMoveRate : moveRate) * Time.deltaTime), 0, Mathf.PI);
 

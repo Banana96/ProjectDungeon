@@ -19,12 +19,14 @@
 	}
 
 	public Position add(int x0, int y0) {
-		x += x0; y += y0;
+		x += x0;
+		y += y0;
 		return this;
 	}
 
 	public Position add(Direction dir) {
-		x += dir.UX; y += dir.UZ;
+		x += dir.UX;
+		y += dir.UZ;
 		return this;
 	}
 
@@ -37,7 +39,7 @@
 	}
 
 	public override string ToString() {
-		return "["+x+", "+y+"]";
+		return "[" + x + ", " + y + "]";
 	}
 
 	public override bool Equals(object obj) {

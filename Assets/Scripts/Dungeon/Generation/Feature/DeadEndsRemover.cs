@@ -1,5 +1,6 @@
 ﻿using System;
 
+/// <summary>Removes corridors, that are dead ends (have only one passable side).</summary>
 public class DeadEndsRemover : FeatureGenerator {
 	public override bool generate(Dungeon dungeon, Random rng) {
 		int removedEnds;
@@ -15,7 +16,7 @@ public class DeadEndsRemover : FeatureGenerator {
 					if(b != null) {
 						if(b.passableCount == 1) {
 							var adjectives = dungeon.getAdjBlocks(p);
-							
+
 							foreach(var d in Direction.All) {
 								if(adjectives[d.Num] != null) {
 									adjectives[d.Num]

@@ -2,6 +2,7 @@
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>Joins areas in dungeon with corridors, and sets texture and collision for joined blocks.</summary>
 public class AreaLinker : FeatureGenerator {
 	public override bool generate(Dungeon dungeon, Random rng) {
 		foreach(var area in dungeon.areas) {
