@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿/*
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.Rendering;
 
 public class DungeonMeshBuilder {
-	#region Quad Vertices
-	private static readonly Vector3[][] QuadVertices = {
+	private readonly Vector3[][] QuadVertices = {
 		new[] {
 			// North
 			new Vector3(-0.5f, -0.5f, 0.5f),
@@ -49,19 +49,17 @@ public class DungeonMeshBuilder {
 		}
 	};
 
-	#endregion
-
-	private const int ChunkSize = 8;
-
 	private readonly Dungeon dungeon;
 	private readonly Transform staticMesh;
+	private readonly bool buildColliders;
 
-	public DungeonMeshBuilder(Dungeon dng) {
+	public DungeonMeshBuilder(Dungeon dng, bool buildColliders = false) {
 		if(dng == null) {
 			Debug.LogError("No dungeon set to be built!");
 		} else {
 			dungeon = dng;
 			staticMesh = dungeon.gameObject.transform.Find("_staticMesh");
+			this.buildColliders = buildColliders;
 
 			if(staticMesh == null) {
 				staticMesh = new GameObject("_staticMesh").transform;
@@ -94,61 +92,53 @@ public class DungeonMeshBuilder {
 		return m;
 	}
 
-	private void AddBlockMesh(IDictionary<int, List<Mesh>> meshGroup, Position pos) {
-		var block = dungeon.getBlock(pos);
-		if(block != null) {
-			var textures = block.getTextures();
+	private Dictionary<int, List<Mesh>> meshGroup;
+	private List<Mesh> wallColliders;
 
-			for(var wall = 0; wall < textures.Length; wall++) {
-				var texture = textures[wall];
+	private void PopulateMeshArrays() {
+		dungeon.ForEachPosition(delegate(Position pos) {
+			var block = dungeon.getBlock(pos);
+			if(block != null) {
+				var textures = block.getTextures();
 
-				if(texture >= 0) {
-					if(texture == 0) {
-						if(wall >= 0 & wall < 4) {
-							texture = dungeon.textures.defaultWall;
-						} else if(wall == 4) {
-							texture = dungeon.textures.defaultFloor;
-						} else { // wall == 5
-							texture = dungeon.textures.defaultCeiling;
+				for(var wall = 0; wall < textures.Length; wall++) {
+					var texture = textures[wall];
+					var genColl = false;
+
+					if(texture >= 0) {
+						if(texture == 0) {
+							if(wall >= 0 & wall < 4) {
+								texture = dungeon.textures.defaultWall;
+								genColl = !block.isPassable(wall);
+							} else if(wall == 4) {
+								texture = dungeon.textures.defaultFloor;
+							} else if(wall == 5) {
+								texture = dungeon.textures.defaultCeiling;
+							}
+						}
+
+						if(!meshGroup.ContainsKey(texture)) {
+							meshGroup.Add(texture, new List<Mesh>());
+						}
+
+						var wallMesh = CreateWallMesh(wall, pos.x, pos.y);
+
+						meshGroup[texture].Add(wallMesh);
+
+						if(genColl) {
+							wallColliders.Add(wallMesh);
 						}
 					}
-
-					if(!meshGroup.ContainsKey(texture)) {
-						meshGroup.Add(texture, new List<Mesh>());
-					}
-
-					var wallMesh = CreateWallMesh(wall, pos.x, pos.y);
-
-					meshGroup[texture].Add(wallMesh);
 				}
 			}
-		}
+		});
 	}
 
-	public void BuildChunk(Position chPos) {
-		var meshGroup = new Dictionary<int, List<Mesh>>();
-
-		var p0 = new Position(chPos.x * ChunkSize, chPos.y * ChunkSize);
-		var p1 = p0.copy().add(ChunkSize, ChunkSize);
-
-		p1.x = Mathf.Min(p1.x, dungeon.Width);
-		p1.y = Mathf.Min(p1.y, dungeon.Height);
-
-		var p = p0.copy();
-
-		for(p.x = p0.x; p.x < p1.x; p.x++) {
-			for(p.y = p0.y; p.y < p1.y; p.y++) {
-				AddBlockMesh(meshGroup, p);
-			}
-		}
-
+	private void BuildMeshGroups() {
 		foreach(var texture in meshGroup.Keys) {
 			var group = meshGroup[texture];
 
-			var meshGroupObject = new GameObject(
-				string.Format("_meshGroup_{0}_{1}_{2}", chPos.x, chPos.y, texture)
-			);
-
+			var meshGroupObject = new GameObject("_meshGroup_" + texture);
 			meshGroupObject.transform.parent = staticMesh.transform;
 
 			var mf = meshGroupObject.AddComponent<MeshFilter>();
@@ -173,16 +163,29 @@ public class DungeonMeshBuilder {
 		}
 	}
 
-	public void BuildMesh() {
-		var chunkNum = new Position(
-			Mathf.CeilToInt((float) dungeon.Width / ChunkSize),
-			Mathf.CeilToInt((float) dungeon.Height / ChunkSize)
-		);
+	private void BuildColliderGroups() {
+		var collCombines = new CombineInstance[wallColliders.Count];
 
-		for(var x = 0; x < chunkNum.x; x++) {
-			for(var y = 0; y < chunkNum.y; y++) {
-				BuildChunk(new Position(x, y));
-			}
+		for(var i = 0; i < collCombines.Length; i++) {
+			collCombines[i].mesh = wallColliders[i];
+		}
+
+		var sharedColl = new Mesh();
+		sharedColl.CombineMeshes(collCombines, true, false);
+
+		dungeon.gameObject.AddComponent<MeshCollider>().sharedMesh = sharedColl;
+	}
+
+	public void BuildMesh() {
+		meshGroup = new Dictionary<int, List<Mesh>>();
+		wallColliders = new List<Mesh>();
+
+		PopulateMeshArrays();
+		BuildMeshGroups();
+
+		if(buildColliders) {
+			BuildColliderGroups();
 		}
 	}
 }
+*/

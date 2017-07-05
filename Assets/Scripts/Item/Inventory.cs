@@ -11,7 +11,7 @@ public class Inventory {
 		get {
 			var free = 0;
 
-			foreach(ItemSlot t in slots) {
+			foreach(var t in slots) {
 				if(t.empty) {
 					free++;
 				}
@@ -23,7 +23,7 @@ public class Inventory {
 
 	public bool isFull {
 		get {
-			foreach(ItemSlot t in slots) {
+			foreach(var t in slots) {
 				if(t.empty) {
 					return false;
 				}
@@ -35,7 +35,7 @@ public class Inventory {
 
 	public bool isEmpty {
 		get {
-			foreach(ItemSlot t in slots) {
+			foreach(var t in slots) {
 				if(!t.empty) {
 					return false;
 				}
@@ -47,7 +47,7 @@ public class Inventory {
 
 	public bool hasFreeSlot {
 		get {
-			foreach(ItemSlot t in slots) {
+			foreach(var t in slots) {
 				if(t.empty) {
 					return true;
 				}

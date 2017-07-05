@@ -1,14 +1,11 @@
 ﻿using System;
 
 public class Area {
-	public int x, y, w, h;
+	private int x, y, w, h;
 
-	public int minX {
-		get { return x; }
-	}
-	public int minY {
-		get { return y; }
-	}
+	public int minX { get { return x; } }
+	public int minY { get { return y; } }
+
 	public Position min {
 		get { return new Position(minX, minY); }
 	}
@@ -98,7 +95,7 @@ public class Area {
 		return this;
 	}
 
-	public bool contains(int x, int y) {
+	private bool contains(int x, int y) {
 		return minX >= x & maxX <= x & minY >= y & maxY <= y;
 	}
 

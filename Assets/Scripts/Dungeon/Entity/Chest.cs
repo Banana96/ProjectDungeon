@@ -2,8 +2,8 @@
 
 [RequireComponent(typeof(Animator))]
 public class Chest : Entity {
-	public Inventory content = new Inventory(18);
-	public bool isLocked;
+	public readonly Inventory content = new Inventory(18);
+	public bool isLocked = false;
 
 	private Animator animator {
 		get { return GetComponent<Animator>(); }

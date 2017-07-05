@@ -27,7 +27,7 @@ public class DungeonGenerator : DungeonBuilder {
 
 		dungeon.InitBlockArray(width, height);
 
-		var features = new List<FeatureGenerator>(new FeatureGenerator[] {
+		var features = new List<FeatureGenerator> {
 			new AreaGenerator(),
 			new CorridorGenerator(),
 			new AreaLinker(),
@@ -35,7 +35,7 @@ public class DungeonGenerator : DungeonBuilder {
 			new RandomPlayerSpawner()
 //			new BlockDecorator(),
 //			new ChestGenerator()
-		});
+		};
 
 		foreach(var f in features) {
 			Debug.Assert(f.generate(dungeon, rng), f + " returned false");

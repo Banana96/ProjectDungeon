@@ -84,7 +84,7 @@ public abstract class Entity : MonoBehaviour {
 	/// <param name="dir">In which direction action should be performed.</param>
 	/// <returns>List of actions.</returns>
 	public EntityRequest[] getAvailableActions(Direction dir) {
-		var requestList = new List<EntityRequest>() {
+		var requestList = new List<EntityRequest> {
 			new Attack(this, dir),
 			new Loot(this, dir),
 			new Move(this, dir)

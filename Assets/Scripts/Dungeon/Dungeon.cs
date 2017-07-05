@@ -6,7 +6,25 @@ using System.Collections.Generic;
 /// <c>Dungeon</c> class represents a complete level: its blocks, areas, entities and spawn positions,
 /// and allows to modify them according to the game rules.
 /// </summary>
+[ExecuteInEditMode]
 public class Dungeon : MonoBehaviour {
+	#region Singleton instance
+	private static Dungeon _inst;
+
+	public static Dungeon Instance {
+		get {
+			return _inst;
+		}
+
+		private set {
+			if(_inst == null) {
+				_inst = value;
+			}
+		}
+	}
+	#endregion
+
+	#region Constants
 	/// <summary>Minimal size of the level.</summary>
 	public const int MinSize = 8;
 
@@ -15,7 +33,9 @@ public class Dungeon : MonoBehaviour {
 
 	/// <summary>Name of object containing this <c>Dungeon</c> entities.</summary>
 	private const string EntitiesObjName = "_entities";
+	#endregion
 
+	#region Fields and properties
 	/// <summary>Array of <c>Block</c>s in cartographical order.</summary>
 	[SerializeField] private Block[,] blocks;
 
@@ -40,8 +60,12 @@ public class Dungeon : MonoBehaviour {
 
 	/// <summary><c>TextureSet</c> used by this <c>Dungeon</c>. It's used by <c>DungeonBuilder</c>s and <c>DungeonMeshBuilder</c>.</summary>
 	[SerializeField] public readonly TextureSet textures = TextureSet.Default;
+	#endregion
 
+	#region Initialization
 	void Awake() {
+		Instance = this;
+
 		var entTsf = transform.Find(EntitiesObjName);
 		entitiesRoot = entTsf != null
 			? entTsf.gameObject
@@ -71,7 +95,9 @@ public class Dungeon : MonoBehaviour {
 
 		blocks = newArray;
 	}
+	#endregion
 
+	#region Block iterators
 	/// <summary>Execute <c>action</c> for each possible position on level.</summary>
 	/// <param name="action">Action performed on each <c>Position</c></param>
 	public void ForEachPosition(Action<Position> action) {
@@ -98,7 +124,9 @@ public class Dungeon : MonoBehaviour {
 			}
 		});
 	}
+	#endregion
 
+	#region Block operators
 	/// <summary>Validates if given coordinates are within level bounds.</summary>
 	/// <returns>Are coordinates in level bounds.</returns>
 	private bool isPosValid(int x, int z) {
@@ -236,7 +264,9 @@ public class Dungeon : MonoBehaviour {
 			blocks[p.x, p.y] = null;
 		}
 	}
+	#endregion
 
+	#region Entity finders
 	/// <summary>Search for all entities of given type.</summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
 	/// <returns>List of entities of given type.</returns>
@@ -282,6 +312,15 @@ public class Dungeon : MonoBehaviour {
 		return null;
 	}
 
+	/// <summary>Get <c>Player</c> instance</summary>
+	/// <returns>Player instance or null</returns>
+	public Player getPlayer()
+	{
+		return getEntity<Player>();
+	}
+	#endregion
+
+	#region Entity spawners
 	/// <summary>Spawn new instance of <c>Entity</c>.</summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
 	/// <param name="p">New entity position.</param>
@@ -305,6 +344,7 @@ public class Dungeon : MonoBehaviour {
 		return e;
 	}
 
+
 	/// <summary>Spawn new instance of <c>Entity</c>, that faces north.</summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
 	/// <param name="p">New entity position.</param>
@@ -313,11 +353,7 @@ public class Dungeon : MonoBehaviour {
 		return spawn<T>(p, Direction.North);
 	}
 
-	/// <summary>Get <c>Player</c> instance</summary>
-	/// <returns>Player instance or null</returns>
-	public Player getPlayer() {
-		return getEntity<Player>();
-	}
+
 
 	/// <summary>Spawn new <c>Player</c> instance if one doesn't exist already.</summary>
 	/// <param name="p">New player position.</param>
@@ -395,6 +431,9 @@ public class Dungeon : MonoBehaviour {
 		return spawnMonster(p, Monster.GetTemplate(id));
 	}
 
+	#endregion
+
+	#region Update
 	/// <summary>
 	/// Update whole level logic queue and force every other <c>Entity</c> to update.
 	/// Used in <c>PlayerInterface</c>, when player requests an update.
@@ -422,4 +461,5 @@ public class Dungeon : MonoBehaviour {
 			}
 		}
 	}
+	#endregion
 }
