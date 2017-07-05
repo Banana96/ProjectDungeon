@@ -53,24 +53,10 @@ public class DungeonMeshBuilder {
 
 	private const int ChunkSize = 8;
 
-	private readonly Dungeon dungeon;
-	private readonly Transform staticMesh;
+	private static Dungeon dungeon;
+	private static Transform staticMesh;
 
-	public DungeonMeshBuilder(Dungeon dng) {
-		if(dng == null) {
-			Debug.LogError("No dungeon set to be built!");
-		} else {
-			dungeon = dng;
-			staticMesh = dungeon.gameObject.transform.Find("_staticMesh");
-
-			if(staticMesh == null) {
-				staticMesh = new GameObject("_staticMesh").transform;
-				staticMesh.parent = dungeon.transform;
-			}
-		}
-	}
-
-	private Mesh CreateWallMesh(int wall, int x, int z) {
+	private static Mesh CreateWallMesh(int wall, int x, int z) {
 		var m = new Mesh();
 
 		var w = QuadVertices[wall];
@@ -94,7 +80,7 @@ public class DungeonMeshBuilder {
 		return m;
 	}
 
-	private void AddBlockMesh(IDictionary<int, List<Mesh>> meshGroup, Position pos) {
+	private static void AddBlockMesh(IDictionary<int, List<Mesh>> meshGroup, Position pos) {
 		var block = dungeon.getBlock(pos);
 		if(block != null) {
 			var textures = block.getTextures();
@@ -125,7 +111,7 @@ public class DungeonMeshBuilder {
 		}
 	}
 
-	public void BuildChunk(Position chPos) {
+	public static void BuildChunk(Position chPos) {
 		var meshGroup = new Dictionary<int, List<Mesh>>();
 
 		var p0 = new Position(chPos.x * ChunkSize, chPos.y * ChunkSize);
@@ -151,7 +137,7 @@ public class DungeonMeshBuilder {
 
 			meshGroupObject.transform.parent = staticMesh.transform;
 
-			var mf = meshGroupObject.AddComponent<MeshFilter>();
+			var mf = meshGroupObject.AddComponent<MeshFilter>( );
 			var combines = new CombineInstance[group.Count];
 
 			for(var i = 0; i < combines.Length; i++) {
@@ -173,7 +159,15 @@ public class DungeonMeshBuilder {
 		}
 	}
 
-	public void BuildMesh() {
+	public static void BuildMesh() {
+		dungeon = Dungeon.Instance;
+		staticMesh = dungeon.gameObject.transform.Find("_staticMesh");
+
+		if(staticMesh == null) {
+			staticMesh = new GameObject("_staticMesh").transform;
+			staticMesh.parent = dungeon.transform;
+		}
+
 		var chunkNum = new Position(
 			Mathf.CeilToInt((float) dungeon.Width / ChunkSize),
 			Mathf.CeilToInt((float) dungeon.Height / ChunkSize)

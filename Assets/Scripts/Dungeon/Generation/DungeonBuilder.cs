@@ -8,8 +8,7 @@ public abstract class DungeonBuilder {
 		Work();
 
 		if(dungeon.transform.Find("_staticMesh") == null) {
-			var dmb = new DungeonMeshBuilder(dungeon);
-			dmb.BuildMesh();
+			DungeonMeshBuilder.BuildMesh();
 		}
 
 		dungeon.autoInitPlayer();
