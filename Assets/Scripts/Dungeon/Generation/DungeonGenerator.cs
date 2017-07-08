@@ -36,7 +36,11 @@ public class DungeonGenerator : DungeonBuilder {
 		};
 
 		foreach(var f in features) {
-			Debug.Assert(f.generate(dungeon, rng), f + " returned false");
+			var featGen = f.generate(dungeon, rng);
+			Debug.Assert(featGen, f + " returned false");
 		}
+
+		var integrity = FloodFillTest.IntegrityTest(dungeon);
+		Debug.Assert(integrity, "Generated dungeon is fractured!");
 	}
 }
