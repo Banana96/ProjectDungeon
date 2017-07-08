@@ -1,9 +1,8 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerInterface : MonoBehaviour {
-	private Dungeon dungeon;
+	private Dungeon dng;
 	private Player player;
 
 	private Camera cam;
@@ -15,16 +14,16 @@ public class PlayerInterface : MonoBehaviour {
 
 	public Response requestResponse;
 
-	public void attach(Dungeon d) {
-		dungeon = d;
-
-		if(!dungeon) {
-			Debug.LogError(new ArgumentException("can't be null"));
+	public void attachDungeon() {
+        dng = Dungeon.Instance;
+        
+		if(!dng) {
+			Debug.LogError(new ArgumentException("Dungeon can't be null"));
 			enabled = false;
 			return;
 		}
 
-		player = dungeon.getPlayer();
+		player = dng.getPlayer();
 
 		if(player == null) {
 			Debug.LogError("Player not found");
@@ -116,7 +115,7 @@ public class PlayerInterface : MonoBehaviour {
 		HandleInput();
 
 		if(player.hasRequest) {
-			dungeon.requestUpdate(this);
+			dng.requestUpdate(this);
 		}
 
 		if(!animationFinished && requestResponse != Response.Empty) {

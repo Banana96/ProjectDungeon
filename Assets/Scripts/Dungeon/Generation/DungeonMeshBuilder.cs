@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
+/// <summary>Builds textured meshes for dungeons.</summary>
 public class DungeonMeshBuilder {
 	#region Quad Vertices
 	private static readonly Vector3[][] QuadVertices = {

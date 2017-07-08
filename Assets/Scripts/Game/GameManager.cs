@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour {
 
 		new GameObject("PlayerInterface")
 			.AddComponent<PlayerInterface>()
-			.attach(dungeon);
+			.attachDungeon();
 
 		DestroyImmediate(gameObject);
 	}
