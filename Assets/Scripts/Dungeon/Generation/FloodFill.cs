@@ -1,4 +1,4 @@
-﻿public class FloodFillTest {
+﻿public class FloodFill {
 	private static bool[,] mark;
 
 	private static void markBlock(Dungeon d, Position p) {
@@ -19,7 +19,7 @@
 		}
 	}
 
-	public static bool IntegrityTest(Dungeon d) {
+	public static bool BlockIntegrityTest(Dungeon d) {
 		mark = new bool[d.Width, d.Height];
 
 		var free = d.firstBlockFreePos();

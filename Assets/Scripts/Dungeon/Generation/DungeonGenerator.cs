@@ -31,7 +31,7 @@ public class DungeonGenerator : DungeonBuilder {
 			new AreaGenerator(),
 			new CorridorGenerator(),
 			new AreaLinker(),
-			new DeadEndsRemover(),
+//			new DeadEndsRemover(),
 			new RandomPlayerSpawner()
 		};
 
@@ -40,7 +40,9 @@ public class DungeonGenerator : DungeonBuilder {
 			Debug.Assert(featGen, f + " returned false");
 		}
 
-		var integrity = FloodFillTest.IntegrityTest(dungeon);
-		Debug.Assert(integrity, "Generated dungeon is fractured!");
+		if(Application.isEditor) {
+			var integrity = FloodFill.BlockIntegrityTest(dungeon);
+			Debug.Assert(integrity, "Generated dungeon is fractured!");
+		}
 	}
 }
