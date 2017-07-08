@@ -15,8 +15,8 @@ public class PlayerInterface : MonoBehaviour {
 	public Response requestResponse;
 
 	public void attachDungeon() {
-        dng = Dungeon.Instance;
-        
+		dng = Dungeon.Instance;
+		
 		if(!dng) {
 			Debug.LogError(new ArgumentException("Dungeon can't be null"));
 			enabled = false;

@@ -230,7 +230,7 @@ public class Dungeon : MonoBehaviour {
 
 	/// <summary>Position of first occurence of existing <c>Block</c> in rows/columns order.</summary>
 	/// <returns>Position of first block.</returns>
-	private Position firstBlockFreePos() {
+	public Position firstBlockFreePos() {
 		var p = new Position();
 
 		for(p.x = 0; p.x < Width; p.x++) {
