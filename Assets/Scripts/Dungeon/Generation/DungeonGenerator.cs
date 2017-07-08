@@ -33,8 +33,6 @@ public class DungeonGenerator : DungeonBuilder {
 			new AreaLinker(),
 			new DeadEndsRemover(),
 			new RandomPlayerSpawner()
-//			new BlockDecorator(),
-//			new ChestGenerator()
 		};
 
 		foreach(var f in features) {
