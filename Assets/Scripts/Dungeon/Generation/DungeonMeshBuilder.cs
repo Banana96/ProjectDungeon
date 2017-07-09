@@ -6,43 +6,37 @@ using UnityEngine.Rendering;
 public class DungeonMeshBuilder {
 	#region Quad Vertices
 	private static readonly Vector3[][] QuadVertices = {
-		new[] {
-			// North
+		new[] { // North
 			new Vector3(-0.5f, -0.5f, 0.5f),
 			new Vector3(-0.5f, 1f, 0.5f),
 			new Vector3(0.5f, 1f, 0.5f),
 			new Vector3(0.5f, -0.5f, 0.5f)
 		},
-		new[] {
-			// East
+		new[] { // East
 			new Vector3(0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, 1f, 0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(0.5f, -0.5f, -0.5f)
 		},
-		new[] {
-			// South
+		new[] { // South
 			new Vector3(0.5f, -0.5f, -0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, -0.5f, -0.5f)
 		},
-		new[] {
-			// West
+		new[] { // West
 			new Vector3(-0.5f, -0.5f, -0.5f),
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(-0.5f, 1f, 0.5f),
 			new Vector3(-0.5f, -0.5f, 0.5f)
 		},
-		new[] {
-			// Floor
+		new[] { // Floor
 			new Vector3(-0.5f, -0.5f, -0.5f),
 			new Vector3(-0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, -0.5f, 0.5f),
 			new Vector3(0.5f, -0.5f, -0.5f)
 		},
-		new[] {
-			// Ceiling
+		new[] { // Ceiling
 			new Vector3(-0.5f, 1f, -0.5f),
 			new Vector3(0.5f, 1f, -0.5f),
 			new Vector3(0.5f, 1f, 0.5f),

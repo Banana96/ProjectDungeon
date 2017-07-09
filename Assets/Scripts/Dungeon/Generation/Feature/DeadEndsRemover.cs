@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Random = System.Random;
 
 /// <summary>Removes corridors, that are dead ends (have only one passable side).</summary>
 public class DeadEndsRemover : FeatureGenerator {
 	public override bool generate(Dungeon dungeon, Random rng) {
+		int max = rng.Next(dungeon.Width * dungeon.Height);
 		int removedEnds;
 
 		do {
@@ -24,7 +25,7 @@ public class DeadEndsRemover : FeatureGenerator {
 					removedEnds++;
 				}
 			});
-		} while(removedEnds > 0);
+		} while(removedEnds > 0 || removedEnds == max);
 
 		return true;
 	}

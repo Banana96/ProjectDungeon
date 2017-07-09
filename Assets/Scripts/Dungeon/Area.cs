@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 public class Area {
 	private int x, y, w, h;
@@ -10,44 +11,45 @@ public class Area {
 		get { return new Position(minX, minY); }
 	}
 
-	public int maxX {
-		get { return x + w; }
-	}
-	public int maxY {
-		get { return y + h; }
-	}
+	public int maxX { get { return x + w; } }
+	public int maxY { get { return y + h; } }
+
 	public Position max {
 		get { return new Position(maxX, maxY); }
 	}
 
-	private int centerX {
-		get { return x + w / 2; }
-	}
-	private int centerY {
-		get { return y + h / 2; }
-	}
+	private int centerX { get { return x + w / 2; } }
+	private int centerY { get { return y + h / 2; } }
+
 	public Position center {
 		get { return new Position(centerX, centerY); }
 	}
 
 	public static void DrawOnDungeon(Dungeon d, Area a) {
-		a.ForEachValidPos(d, delegate(Position p) {
-			var b = d.setBlock(p)
-				.removeWallTextures()
-				.setAllPassable();
+		for(var x = a.minX; x <= a.maxX; x++) {
+			for(var y = a.minY; y <= a.maxY; y++) {
+				var p = new Position(x, y);
 
-			if(p.x == a.minX) {
-				b.setTexture(0, Direction.West).setUnpassable(Direction.West);
-			} else if(p.x == a.maxX - 1) {
-				b.setTexture(0, Direction.East).setUnpassable(Direction.East);
-			}
+				Debug.Assert(d.getBlock(p) == null, "Drawing on existing block");
 
-			if(p.y == a.minY) {
-				b.setTexture(0, Direction.South).setUnpassable(Direction.South);
-			} else if(p.y == a.maxY - 1) {
-				b.setTexture(0, Direction.North).setUnpassable(Direction.North);
+				var b = d.setBlock(p)
+					.removeWallTextures()
+					.setAllPassable()
+					.setAreaBlock();
+
+				if(p.x == a.minX) {
+					b.setTexture(0, Direction.West).setUnpassable(Direction.West);
+				} else if(p.x == a.maxX) {
+					b.setTexture(0, Direction.East).setUnpassable(Direction.East);
+				}
+
+				if(p.y == a.minY) {
+					b.setTexture(0, Direction.South).setUnpassable(Direction.South);
+				} else if(p.y == a.maxY) {
+					b.setTexture(0, Direction.North).setUnpassable(Direction.North);
+				}
 			}
-		});
+		}
 	}
 
 	public static Area fromCoords(int x0, int y0, int x1, int y1) {
@@ -135,25 +137,5 @@ public class Area {
 					(cx == minX && cy == maxY) || (cx == maxX && cy == maxY);
 		}
 		return false;
-	}
-
-	public Position[] edgeIterator(Direction side) {
-		var i = new Position[2];
-
-		if(side == Direction.North) {
-			i[0] = new Position(minX, minY);
-			i[1] = new Position(maxX, minY);
-		} else if(side == Direction.East) {
-			i[0] = new Position(maxX, minY);
-			i[1] = new Position(maxX, maxY);
-		} else if(side == Direction.South) {
-			i[0] = new Position(minX, maxY);
-			i[1] = new Position(maxX, maxY);
-		} else if(side == Direction.West) {
-			i[0] = new Position(minX, minY);
-			i[1] = new Position(minX, maxY);
-		}
-
-		return i;
 	}
 }

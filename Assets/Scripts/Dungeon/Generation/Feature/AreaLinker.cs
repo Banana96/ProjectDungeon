@@ -2,56 +2,73 @@
 using UnityEngine;
 using Random = System.Random;
 
-/// <summary>Joins areas in dungeon with corridors, and sets texture and collision for joined blocks.</summary>
+/// <summary>Joins areas in dungeon with corridors.</summary>
 public class AreaLinker : FeatureGenerator {
+	
+	/// No tuples in Unity, so I have to do this
+	private class Edge {
+		public readonly Position pos;
+		public readonly Direction dir;
+
+		public Edge(Position p, Direction d) {
+			pos = p;
+			dir = d;
+		}
+	}
+
 	public override bool generate(Dungeon dungeon, Random rng) {
+		var doorTex = dungeon.textures.doorOpen;
+
 		foreach(var area in dungeon.areas) {
-			var availableSides = new List<Direction>();
+			var edges = new List<Edge>();
 
-			if(area.minY != 0) {
-				availableSides.Add(Direction.North);
+			// Write all possible edges
+			for(var x = area.minX; x < area.maxX; x++) {
+				edges.Add(new Edge(new Position(x, area.minY), Direction.South));
+				edges.Add(new Edge(new Position(x, area.maxY), Direction.North));
 			}
 
-			if(area.maxY != dungeon.Height - 1) {
-				availableSides.Add(Direction.South);
+			for(var y = area.minY; y < area.maxY; y++) {
+				edges.Add(new Edge(new Position(area.minX, y), Direction.West));
+				edges.Add(new Edge(new Position(area.maxX, y), Direction.East));
 			}
 
-			if(area.maxX != dungeon.Width - 1) {
-				availableSides.Add(Direction.East);
-			}
+			// Remove edges with no connection or connection to another area
+			for(var i = 0; i < edges.Count; i++) {
+				var e = edges[i];
+				var adj = dungeon.getAdjBlock(e.pos, e.dir);
 
-			if(area.minX != 0) {
-				availableSides.Add(Direction.West);
-			}
-
-			var side = U.RandArrElem(availableSides.ToArray(), rng);
-			var it = area.edgeIterator(side);
-
-			var linked = false;
-
-			do {
-				var p = new Position(rng.Next(it[0].x, it[1].x), rng.Next(it[0].y, it[1].y));
-				var block = dungeon.getBlock(p);
-				var adjBlock = dungeon.getAdjBlock(p, side.GetOpposite());
-
-				if(adjBlock != null) {
-					Direction s = side, os = side.GetOpposite();
-
-					Debug.Assert(block != null);
-
-					block
-						.setTexture(dungeon.textures.doorOpen, os)
-						.setSpecial(os)
-						.setPassable(os);
-
-					adjBlock
-						.setTexture(dungeon.textures.doorOpen, s)
-						.setSpecial(s)
-						.setPassable(s);
-
-					linked = true;
+				if(adj == null || adj.isAreaBlock()) {
+					edges.Remove(e);
+					i--;
 				}
-			} while(!linked);
+			}
+
+			// If something went wrong, return false
+			if(edges.Count == 0) {
+				Debug.Assert(false, "No edges to link in "+this);
+				return false;
+			}
+
+			// Select random edge
+			var edge = U.RandArrElem(edges, rng);
+
+			// Get actual blocks and validate
+			var block1 = dungeon.getBlock(edge.pos);
+			var block2 = dungeon.getAdjBlock(edge.pos, edge.dir);
+
+			// Set passable and door texture
+			if(block1 != null && block2 != null) {
+				block1
+					.setPassable(edge.dir)
+					.setTexture(doorTex, edge.dir);
+
+				block2
+					.setPassable(edge.dir.GetOpposite())
+					.setTexture(doorTex, edge.dir.GetOpposite());
+			} else {
+				Debug.Assert(false, "Selected edge is invalid");
+			}
 		}
 
 		return true;

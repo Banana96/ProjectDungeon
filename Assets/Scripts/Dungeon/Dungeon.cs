@@ -97,7 +97,7 @@ public class Dungeon : MonoBehaviour {
 	}
 	#endregion
 
-	#region Block iterators
+	#region Position iterators
 	/// <summary>Execute <c>action</c> for each possible position on level.</summary>
 	/// <param name="action">Action performed on each <c>Position</c></param>
 	public void ForEachPosition(Action<Position> action) {
@@ -177,7 +177,7 @@ public class Dungeon : MonoBehaviour {
 	/// <param name="d">Direction from origin.</param>
 	/// <returns>Adjacent block.</returns>
 	public Block getAdjBlock(Position p, Direction d) {
-		var ap = new Position(p.x, p.y).add(d);
+		var ap = p.copy().add(d);
 		return isPosValid(ap) ? getBlock(ap) : null;
 	}
 
@@ -344,7 +344,6 @@ public class Dungeon : MonoBehaviour {
 		return e;
 	}
 
-
 	/// <summary>Spawn new instance of <c>Entity</c>, that faces north.</summary>
 	/// <typeparam name="T">Type of entity.</typeparam>
 	/// <param name="p">New entity position.</param>
@@ -352,8 +351,6 @@ public class Dungeon : MonoBehaviour {
 	private T spawn<T>(Position p) where T : Entity {
 		return spawn<T>(p, Direction.North);
 	}
-
-
 
 	/// <summary>Spawn new <c>Player</c> instance if one doesn't exist already.</summary>
 	/// <param name="p">New player position.</param>
@@ -433,7 +430,7 @@ public class Dungeon : MonoBehaviour {
 
 	#endregion
 
-	#region Update
+	#region Logic update
 	/// <summary>
 	/// Update whole level logic queue and force every other <c>Entity</c> to update.
 	/// Used in <c>PlayerInterface</c>, when player requests an update.

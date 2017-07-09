@@ -7,18 +7,7 @@ public class DungeonGenerator : DungeonBuilder {
 	public DungeonGenerator(Dungeon d) : base(d) { }
 
 	protected override void Work() {
-		const string seed = "";
-		long seedResult;
-
-		if(seed.Length > 0) {
-			if(!long.TryParse(seed, out seedResult)) {
-				foreach(var c in seed) {
-					seedResult = seedResult + c;
-				}
-			}
-		} else {
-			seedResult = new Random().Next();
-		}
+		long seedResult = new Random().Next();
 
 		var rng = new Random((int) seedResult);
 
@@ -31,7 +20,7 @@ public class DungeonGenerator : DungeonBuilder {
 			new AreaGenerator(),
 			new CorridorGenerator(),
 			new AreaLinker(),
-//			new DeadEndsRemover(),
+			new DeadEndsRemover(),
 			new RandomPlayerSpawner()
 		};
 
