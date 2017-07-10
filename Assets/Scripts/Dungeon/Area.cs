@@ -25,27 +25,25 @@ public class Area {
 		get { return new Position(centerX, centerY); }
 	}
 
-	public static void DrawOnDungeon(Dungeon d, Area a) {
-		for(var x = a.minX; x <= a.maxX; x++) {
-			for(var y = a.minY; y <= a.maxY; y++) {
-				var p = new Position(x, y);
-
-				Debug.Assert(d.getBlock(p) == null, "Drawing on existing block");
+	public void draw(Dungeon d) {
+		for(var ix = minX; ix <= maxX; ix++) {
+			for(var iy = minY; iy <= maxY; iy++) {
+				var p = new Position(ix, iy);
 
 				var b = d.setBlock(p)
 					.removeWallTextures()
 					.setAllPassable()
 					.setAreaBlock();
 
-				if(p.x == a.minX) {
+				if(p.x == minX) {
 					b.setTexture(0, Direction.West).setUnpassable(Direction.West);
-				} else if(p.x == a.maxX) {
+				} else if(p.x == maxX) {
 					b.setTexture(0, Direction.East).setUnpassable(Direction.East);
 				}
 
-				if(p.y == a.minY) {
+				if(p.y == minY) {
 					b.setTexture(0, Direction.South).setUnpassable(Direction.South);
-				} else if(p.y == a.maxY) {
+				} else if(p.y == maxY) {
 					b.setTexture(0, Direction.North).setUnpassable(Direction.North);
 				}
 			}
@@ -113,10 +111,10 @@ public class Area {
 	}
 
 	public bool touches(Area other) {
-		return (minX - 1 < other.maxX) &&
-				(maxX + 1 > other.minX) &&
-				(minY - 1 < other.maxY) &&
-				(maxY + 1 > other.minY);
+		return (minX <= other.maxX) &&
+				(maxX >= other.minX) &&
+				(minY <= other.maxY) &&
+				(maxY >= other.minY);
 	}
 
 	public override string ToString() {

@@ -46,7 +46,7 @@ public class AreaLinker : FeatureGenerator {
 
 			// If something went wrong, return false
 			if(edges.Count == 0) {
-				Debug.Assert(false, "No edges to link in "+this);
+				Debug.Assert(false, "No edges to link area to");
 				return false;
 			}
 

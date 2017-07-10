@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using Random = System.Random;
 
 /// <summary>Generates corridors using growing tree algorithm.</summary>
@@ -31,6 +32,8 @@ public class CorridorGenerator : FeatureGenerator {
 				cells.Push(n);
 			}
 		}
+
+		Debug.Log("Corridors generated");
 
 		return true;
 	}

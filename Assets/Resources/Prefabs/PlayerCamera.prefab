@@ -182,4 +182,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d9eb08170948749808197f2f334610, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pixelation: 2
+  pixelation: 3

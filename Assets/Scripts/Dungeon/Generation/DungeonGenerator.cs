@@ -14,6 +14,8 @@ public class DungeonGenerator : DungeonBuilder {
 		int width = rng.Next(Dungeon.MinSize, Dungeon.MaxSize),
 			height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
 
+		Debug.Log(string.Format("Dungeon size: {0}x{1}", width, height));
+
 		dungeon.InitBlockArray(width, height);
 
 		var features = new List<FeatureGenerator> {
@@ -21,6 +23,7 @@ public class DungeonGenerator : DungeonBuilder {
 			new CorridorGenerator(),
 			new AreaLinker(),
 			new DeadEndsRemover(),
+
 			new RandomPlayerSpawner()
 		};
 

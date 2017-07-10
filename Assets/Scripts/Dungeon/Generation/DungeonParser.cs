@@ -122,7 +122,7 @@ public class DungeonParser : DungeonBuilder {
 		var c1 = argsPosition(x1Arg, y1Arg);
 		var c2 = argsPosition(x2Arg, y2Arg);
 
-		Area.DrawOnDungeon(dungeon, new Area(c1.x, c1.y, c2.x, c2.y));
+		new Area(c1.x, c1.y, c2.x, c2.y).draw(dungeon);
 	}
 
 	private void SetBlockTexture(string xArg, string yArg, string wallArg, string texArg = "0") {
