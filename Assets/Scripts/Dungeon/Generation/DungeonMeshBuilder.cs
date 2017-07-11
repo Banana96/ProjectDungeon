@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -48,7 +49,7 @@ public class DungeonMeshBuilder {
 
 	private const int ChunkSize = 8;
 
-	private static Dungeon dungeon;
+	private static Dungeon dungeon => Dungeon.Instance;
 	private static Transform staticMesh;
 
 	private static Mesh CreateWallMesh(int wall, int x, int z) {
@@ -70,7 +71,7 @@ public class DungeonMeshBuilder {
 			new Vector2(1, 0)
 		};
 
-		m.triangles = new[] {0, 1, 2, 0, 2, 3};
+		m.triangles = new[] { 0, 1, 2, 0, 2, 3 };
 
 		return m;
 	}
@@ -126,7 +127,9 @@ public class DungeonMeshBuilder {
 		foreach(var texture in meshGroup.Keys) {
 			var group = meshGroup[texture];
 
-			var meshGroupObject = new GameObject($"_meshGroup_{chPos.x}_{chPos.y}_{texture}");
+			var mgName = $"_meshGroup_{chPos.x}_{chPos.y}_{texture}";
+
+			var meshGroupObject = GameObject.Find(mgName) ?? new GameObject(mgName);
 
 			meshGroupObject.transform.parent = staticMesh.transform;
 
@@ -153,7 +156,6 @@ public class DungeonMeshBuilder {
 	}
 
 	public static void BuildMesh() {
-		dungeon = Dungeon.Instance;
 		staticMesh = dungeon.gameObject.transform.Find("_staticMesh");
 
 		if(staticMesh == null) {

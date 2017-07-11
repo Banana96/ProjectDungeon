@@ -1,40 +1,65 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Random = System.Random;
 
 /// <summary>Builds procedurally generated dungeon from given or random seed.</summary>
 public class DungeonGenerator : DungeonBuilder {
-	public DungeonGenerator(Dungeon d) : base(d) { }
+	private readonly string seed;
+	private Random rng;
+	private List<FeatureGenerator> features;
 
-	protected override void Work() {
-		long seedResult = new Random().Next();
+	public DungeonGenerator(Dungeon d, string s = "") : base(d) {
+		seed = s;
 
-		var rng = new Random((int) seedResult);
+		buildProcess += Init;
+		buildProcess += Generate;
+		buildProcess += BuildMesh;
+	}
+
+	/// <summary>Converts entered seed string to int seed, or returns random one.</summary>
+	private int getSeedResult() {
+		if(seed.Length == 0) {
+			return new Random().Next();
+		}
+
+		var result = 0;
+		var i = 1;
+
+		foreach(var letter in seed) {
+			result += letter * i++;
+		}
+
+		return result;
+	}
+
+	private void Init() {
+		rng = new Random(getSeedResult());
+
+		features = new List<FeatureGenerator> {
+			new AreaGenerator(),
+			new CorridorGenerator(),
+			new AreaLinker(),
+//			new DeadEndsRemover(),
+			new RandomPlayerSpawner()
+		};
 
 		int width = rng.Next(Dungeon.MinSize, Dungeon.MaxSize),
 			height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
 
-		Debug.Log($"Dungeon size: {width}x{height}");
-
 		dungeon.InitBlockArray(width, height);
 
-		var features = new List<FeatureGenerator> {
-			new AreaGenerator(),
-			new CorridorGenerator(),
-			new AreaLinker(),
-			new DeadEndsRemover(),
+		Debug.Log($"Dungeon size: {width}x{height}");
+	}
 
-			new RandomPlayerSpawner()
-		};
-
+	private void Generate() {
 		foreach(var f in features) {
-			var featGen = f.generate(dungeon, rng);
-			Debug.Assert(featGen, f + " returned false");
+			Debug.Assert(f.generate(dungeon, rng), f + " failed");
 		}
 
 		if(Application.isEditor) {
 			var integrity = FloodFill.BlockIntegrityTest(dungeon);
 			Debug.Assert(integrity, "Generated dungeon is fractured!");
+			Application.Quit();
 		}
 	}
 }

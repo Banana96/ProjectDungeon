@@ -1,8 +1,9 @@
-﻿using Random = System.Random;
+﻿using UnityEngine;
+using Random = System.Random;
 
 /// <summary>Removes corridors, that are dead ends (have only one passable side).</summary>
 public class DeadEndsRemover : FeatureGenerator {
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		var max = rng.Next(dungeon.Width * dungeon.Height);
 		var removedEnds = 0;
 
@@ -26,6 +27,8 @@ public class DeadEndsRemover : FeatureGenerator {
 				}
 			});
 		} while(removedEnds > 0 || removedEnds == max);
+
+		Debug.Log("Removed dead ends");
 
 		return true;
 	}

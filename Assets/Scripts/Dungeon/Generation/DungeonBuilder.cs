@@ -1,19 +1,21 @@
 ﻿/// <summary>Abstracted class for automated dungeon in-game init.</summary>
 public abstract class DungeonBuilder {
+	protected delegate void BuildProcess();
+
 	protected readonly Dungeon dungeon;
+	protected BuildProcess buildProcess;
 
 	protected DungeonBuilder(Dungeon d) {
 		dungeon = d;
+	}
 
-		Work();
-
+	protected void BuildMesh() {
 		if(dungeon.transform.Find("_staticMesh") == null) {
 			DungeonMeshBuilder.BuildMesh();
 		}
-
-		dungeon.autoInitPlayer();
 	}
 
-	/// <summary>Actual algorithm to generate complete dungeon.</summary>
-	protected abstract void Work();
+	public void Build() {
+		buildProcess();
+	}
 }

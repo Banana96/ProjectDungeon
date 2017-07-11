@@ -1,10 +1,6 @@
 ﻿using System;
 
 /// <summary>Abstracted class for generating various parts of a dungeon.</summary>
-public abstract class FeatureGenerator {
-	public abstract bool generate(Dungeon dungeon, Random rng);
-
-	public override string ToString() {
-		return GetType().Name;
-	}
+public interface FeatureGenerator {
+	bool generate(Dungeon dungeon, Random rng);
 }

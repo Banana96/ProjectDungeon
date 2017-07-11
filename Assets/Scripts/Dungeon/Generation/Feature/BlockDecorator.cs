@@ -5,7 +5,7 @@
 public class BlockDecorator : FeatureGenerator {
 	private const int DecorationChance = 12;
 
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		var tx = dungeon.textures;
 
 		for(var y = 0; y < dungeon.Height; y++) {

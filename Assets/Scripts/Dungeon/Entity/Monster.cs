@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-/// <summary>Monster is an entity, that can hurt player. It's build from <c>MonsterTemplate</c>.</summary>
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 public class Monster : Entity {
 	/// <summary>Try to load <c>MonsterTemplate</c> from available resources.</summary>

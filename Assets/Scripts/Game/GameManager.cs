@@ -8,12 +8,15 @@ public class GameManager : MonoBehaviour {
 	public void Start() {
 		var dungeonObj = new GameObject("Dungeon") {tag = "Dungeon"};
 		var dungeon = dungeonObj.AddComponent<Dungeon>();
+		DungeonBuilder builder;
 
 		if(playMode == PlayMode.Campaign) {
-			new TutorialMission(dungeon);
+			builder = new TutorialMission(dungeon);
 		} else {
-			new DungeonGenerator(dungeon);
+			builder = new DungeonGenerator(dungeon, "asdf");
 		}
+
+		builder.Build();
 
 		new GameObject("PlayerInterface")
 			.AddComponent<PlayerInterface>()

@@ -26,10 +26,10 @@ public class Dungeon : MonoBehaviour {
 
 	#region Constants
 	/// <summary>Minimal size of the level.</summary>
-	public const int MinSize = 8;
+	public const int MinSize = 16;
 
 	/// <summary>Maximal size of the level.</summary>
-	public const int MaxSize = 24;
+	public const int MaxSize = 32;
 
 	/// <summary>Name of object containing this <c>Dungeon</c> entities.</summary>
 	private const string EntitiesObjName = "_entities";
@@ -63,9 +63,7 @@ public class Dungeon : MonoBehaviour {
 		Instance = this;
 
 		var entTsf = transform.Find(EntitiesObjName);
-		entitiesRoot = entTsf != null
-			? entTsf.gameObject
-			: new GameObject(EntitiesObjName);
+		entitiesRoot = entTsf?.gameObject ?? new GameObject(EntitiesObjName);
 
 		entitiesRoot.transform.parent = transform;
 	}

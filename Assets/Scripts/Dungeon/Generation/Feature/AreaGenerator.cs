@@ -19,7 +19,7 @@ public class AreaGenerator : FeatureGenerator {
 		return new Area(x, y, w, h);
 	}
 
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		dungeon.areas.Add(randomArea(dungeon, rng));
 
 		var tries = rng.Next(MinAreaTries, MaxAreaTries);

@@ -13,7 +13,7 @@ public class MonsterGenerator : FeatureGenerator {
 		mobTypes = types;
 	}
 
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		for(var i = 0; i <= mobLimit; i++) {
 			Position pos;
 

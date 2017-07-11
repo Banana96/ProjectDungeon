@@ -6,7 +6,7 @@ using Random = System.Random;
 public class ChestGenerator : FeatureGenerator {
 	private const int SpawnChance = 50;
 
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		var areaCount = dungeon.areas.Count;
 		var chestCount = Mathf.FloorToInt(areaCount * (SpawnChance / 100));
 		chestCount = (chestCount == 0 ? 1 : chestCount);

@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
 using Edge = System.Tuple<Position, Direction>;
 
 /// <summary>Joins areas in dungeon with corridors.</summary>
 public class AreaLinker : FeatureGenerator {
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		var doorTex = dungeon.textures.doorOpen;
 
 		foreach(var area in dungeon.areas) {
-			var edges = new List<Tuple<Position, Direction>>();
+			var edges = new List<Edge>();
 
 			// Write all possible edges
 			for(var x = area.minX; x < area.maxX; x++) {
@@ -60,6 +59,8 @@ public class AreaLinker : FeatureGenerator {
 				Debug.Assert(false, "Selected edge is invalid");
 			}
 		}
+
+		Debug.Log("Areas linked to corridors");
 
 		return true;
 	}

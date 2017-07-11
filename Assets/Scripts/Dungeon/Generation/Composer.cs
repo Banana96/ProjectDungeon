@@ -1,7 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 
 /// <summary>
-/// Composer allows to quickly build whole <c>Dungeon</c> with command chain.
+/// Composer allows to quickly BuildProcess whole <c>Dungeon</c> with command chain.
 /// </summary>
 public class Composer {
 	private readonly Dungeon dungeon;

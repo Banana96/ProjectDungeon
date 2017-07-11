@@ -10,6 +10,8 @@ public class DungeonParser : DungeonBuilder {
 
 	public DungeonParser(Dungeon d, string code) : base(d) {
 		rawCode = code;
+
+		buildProcess += Parse;
 	}
 
 	private static Position argsPosition(string xArg, string yArg) {
@@ -197,7 +199,7 @@ public class DungeonParser : DungeonBuilder {
 		}
 	}
 
-	protected override void Work() {
+	protected void Parse() {
 		foreach(var instr in trimmedRawCode.Split(';')) {
 			var args = instr.Split(',');
 

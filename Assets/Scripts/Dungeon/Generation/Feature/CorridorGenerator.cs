@@ -4,7 +4,7 @@ using Random = System.Random;
 
 /// <summary>Generates corridors using growing tree algorithm.</summary>
 public class CorridorGenerator : FeatureGenerator {
-	public override bool generate(Dungeon dungeon, Random rng) {
+	public bool generate(Dungeon dungeon, Random rng) {
 		var cells = new Stack<Position>();
 
 		Position first;
