@@ -4,9 +4,7 @@ using System.Collections;
 public class QuitGamePanel : MonoBehaviour {
 	public MenuButton menuButton;
 
-	public bool isOpen {
-		get { return gameObject.activeInHierarchy; }
-	}
+	public bool isOpen => gameObject.activeInHierarchy;
 
 	void Awake() {
 		gameObject.SetActive(false);

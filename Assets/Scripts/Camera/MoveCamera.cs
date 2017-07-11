@@ -8,7 +8,7 @@ public class MoveCamera : CameraAnimation {
 
 	private float progress;
 
-	public Direction dir { get; private set; }
+	public Direction dir { get; }
 	private readonly float sign;
 
 	private Vector3 initPos;

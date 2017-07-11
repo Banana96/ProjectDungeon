@@ -3,8 +3,8 @@
 /// <summary>Removes corridors, that are dead ends (have only one passable side).</summary>
 public class DeadEndsRemover : FeatureGenerator {
 	public override bool generate(Dungeon dungeon, Random rng) {
-		int max = rng.Next(dungeon.Width * dungeon.Height);
-		int removedEnds;
+		var max = rng.Next(dungeon.Width * dungeon.Height);
+		var removedEnds = 0;
 
 		do {
 			removedEnds = 0;

@@ -126,9 +126,7 @@ public class DungeonMeshBuilder {
 		foreach(var texture in meshGroup.Keys) {
 			var group = meshGroup[texture];
 
-			var meshGroupObject = new GameObject(
-				string.Format("_meshGroup_{0}_{1}_{2}", chPos.x, chPos.y, texture)
-			);
+			var meshGroupObject = new GameObject($"_meshGroup_{chPos.x}_{chPos.y}_{texture}");
 
 			meshGroupObject.transform.parent = staticMesh.transform;
 

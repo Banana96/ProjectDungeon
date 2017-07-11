@@ -4,26 +4,20 @@ using UnityEngine;
 public class Area {
 	private int x, y, w, h;
 
-	public int minX { get { return x; } }
-	public int minY { get { return y; } }
+	public int minX => x;
+	public int minY => y;
 
-	public Position min {
-		get { return new Position(minX, minY); }
-	}
+	public Position min => new Position(minX, minY);
 
-	public int maxX { get { return x + w; } }
-	public int maxY { get { return y + h; } }
+	public int maxX => x + w;
+	public int maxY => y + h;
 
-	public Position max {
-		get { return new Position(maxX, maxY); }
-	}
+	public Position max => new Position(maxX, maxY);
 
-	private int centerX { get { return x + w / 2; } }
-	private int centerY { get { return y + h / 2; } }
+	private int centerX => x + w / 2;
+	private int centerY => y + h / 2;
 
-	public Position center {
-		get { return new Position(centerX, centerY); }
-	}
+	public Position center => new Position(centerX, centerY);
 
 	public void draw(Dungeon d) {
 		for(var ix = minX; ix <= maxX; ix++) {

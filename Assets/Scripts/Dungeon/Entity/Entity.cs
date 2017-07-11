@@ -23,37 +23,25 @@ public abstract class Entity : MonoBehaviour {
 	protected EntityTemplate template;
 
 	/// <summary>Name visible for player in-game.</summary>
-	public string publicName {
-		get { return template.publicName; }
-	}
+	public string publicName => template.publicName;
 
 	/// <summary>Can this entity be hurt or killed.</summary>
-	public bool invincible {
-		get { return template.invincible; }
-	}
+	public bool invincible => template.invincible;
 
 	/// <summary>Maximum amount of health points</summary>
-	public int maxHealth {
-		get { return template.health; }
-	}
+	public int maxHealth => template.health;
 
 	/// <summary>Current amount of health points</summary>
 	public int currentHealth { get; protected set; }
 
 	/// <summary>Minimal attack, that this entity can deal.</summary>
-	public int minAttack {
-		get { return template.minAttack; }
-	}
+	public int minAttack => template.minAttack;
 
 	/// <summary>Maximal attack, that this entity can deal.</summary>
-	public int maxAttack {
-		get { return template.maxAttack; }
-	}
+	public int maxAttack => template.maxAttack;
 
 	/// <summary>Random value in range between <c>minAttack</c> and <c>maxAttack</c> values.</summary>
-	public int nextAttack {
-		get { return Random.Range(minAttack, maxAttack + 1); }
-	}
+	public int nextAttack => Random.Range(minAttack, maxAttack + 1);
 
 	/// <summary>Direction, that this entity is facing.</summary>
 	public Direction facing {

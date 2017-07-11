@@ -20,7 +20,7 @@ public class BounceCamera : CameraAnimation {
 	}
 
 	public override void Update() {
-		progress = Mathf.Clamp(progress + ((fastMove ? fastMoveRate : moveRate) * Time.deltaTime), 0, Mathf.PI);
+		progress = Mathf.Clamp(progress + (fastMove ? fastMoveRate : moveRate) * Time.deltaTime, 0, Mathf.PI);
 
 		currentPos.x = Mathf.Lerp(initPos.x, destPos.x, Mathf.Sin(progress));
 		currentPos.z = Mathf.Lerp(initPos.z, destPos.z, Mathf.Sin(progress));

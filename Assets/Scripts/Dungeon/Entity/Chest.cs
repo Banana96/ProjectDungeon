@@ -5,9 +5,7 @@ public class Chest : Entity {
 	public readonly Inventory content = new Inventory(18);
 	public bool isLocked = false;
 
-	private Animator animator {
-		get { return GetComponent<Animator>(); }
-	}
+	private Animator animator => GetComponent<Animator>();
 
 	void Awake() {
 		var box = new GameObject("Box");

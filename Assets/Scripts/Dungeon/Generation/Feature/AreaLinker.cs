@@ -1,26 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = System.Random;
+using Edge = System.Tuple<Position, Direction>;
 
 /// <summary>Joins areas in dungeon with corridors.</summary>
 public class AreaLinker : FeatureGenerator {
-	
-	/// No tuples in Unity, so I have to do this
-	private class Edge {
-		public readonly Position pos;
-		public readonly Direction dir;
-
-		public Edge(Position p, Direction d) {
-			pos = p;
-			dir = d;
-		}
-	}
-
 	public override bool generate(Dungeon dungeon, Random rng) {
 		var doorTex = dungeon.textures.doorOpen;
 
 		foreach(var area in dungeon.areas) {
-			var edges = new List<Edge>();
+			var edges = new List<Tuple<Position, Direction>>();
 
 			// Write all possible edges
 			for(var x = area.minX; x < area.maxX; x++) {
@@ -36,7 +26,7 @@ public class AreaLinker : FeatureGenerator {
 			// Remove edges with no connection or connection to another area
 			for(var i = 0; i < edges.Count; i++) {
 				var e = edges[i];
-				var adj = dungeon.getAdjBlock(e.pos, e.dir);
+				var adj = dungeon.getAdjBlock(e.Item1, e.Item2);
 
 				if(adj == null || adj.isAreaBlock()) {
 					edges.Remove(e);
@@ -54,18 +44,18 @@ public class AreaLinker : FeatureGenerator {
 			var edge = U.RandArrElem(edges, rng);
 
 			// Get actual blocks and validate
-			var block1 = dungeon.getBlock(edge.pos);
-			var block2 = dungeon.getAdjBlock(edge.pos, edge.dir);
+			var block1 = dungeon.getBlock(edge.Item1);
+			var block2 = dungeon.getAdjBlock(edge.Item1, edge.Item2);
 
 			// Set passable and door texture
 			if(block1 != null && block2 != null) {
 				block1
-					.setPassable(edge.dir)
-					.setTexture(doorTex, edge.dir);
+					.setPassable(edge.Item2)
+					.setTexture(doorTex, edge.Item2);
 
 				block2
-					.setPassable(edge.dir.GetOpposite())
-					.setTexture(doorTex, edge.dir.GetOpposite());
+					.setPassable(edge.Item2.GetOpposite())
+					.setTexture(doorTex, edge.Item2.GetOpposite());
 			} else {
 				Debug.Assert(false, "Selected edge is invalid");
 			}

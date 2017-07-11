@@ -4,7 +4,7 @@ using Random = System.Random;
 
 /// <summary>Spawns chests in dungeon.</summary>
 public class ChestGenerator : FeatureGenerator {
-	private static readonly int SpawnChance = 50;
+	private const int SpawnChance = 50;
 
 	public override bool generate(Dungeon dungeon, Random rng) {
 		var areaCount = dungeon.areas.Count;

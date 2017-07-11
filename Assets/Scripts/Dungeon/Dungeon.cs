@@ -43,14 +43,10 @@ public class Dungeon : MonoBehaviour {
 	[SerializeField] private GameObject entitiesRoot;
 
 	/// <summary>Array of blocks width.</summary>
-	public int Width {
-		get { return blocks != null ? blocks.GetLength(0) : 0; }
-	}
+	public int Width => blocks?.GetLength(0) ?? 0;
 
 	/// <summary>Array of blocks height.</summary>
-	public int Height {
-		get { return blocks != null ? blocks.GetLength(1) : 0; }
-	}
+	public int Height => blocks?.GetLength(1) ?? 0;
 
 	/// <summary>List of areas. It is populated by an instance of <c>DungeonBuilder</c>.</summary>
 	[SerializeField] public readonly List<Area> areas = new List<Area>();

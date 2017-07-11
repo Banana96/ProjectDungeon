@@ -43,8 +43,7 @@ public class AreaGenerator : FeatureGenerator {
 			area.draw(dungeon);
 		}
 
-		Debug.Log(string.Format("Generated {0} areas in {1} tries", 
-			dungeon.areas.Count, tries));
+		Debug.Log($"Generated {dungeon.areas.Count} areas in {tries} tries");
 
 		return true;
 	}

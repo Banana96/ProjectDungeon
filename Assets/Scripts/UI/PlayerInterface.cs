@@ -8,9 +8,7 @@ public class PlayerInterface : MonoBehaviour {
 	private Camera cam;
 	private CameraAnimation camAnim;
 
-	private bool animationFinished {
-		get { return camAnim == null; }
-	}
+	private bool animationFinished => camAnim == null;
 
 	public Response requestResponse;
 

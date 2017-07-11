@@ -1,7 +1,5 @@
 ﻿public class Move : EntityRequest {
-	private Direction direction {
-		get { return target as Direction; }
-	}
+	private Direction direction => target as Direction;
 
 	public Move(Entity e, Direction dir = null) : base(e, dir) {
 		if(dir == null) {

@@ -1,7 +1,5 @@
 ﻿public class Loot : EntityRequest {
-	private Direction direction {
-		get { return target as Direction; }
-	}
+	private Direction direction => target as Direction;
 
 	public Loot(Entity e, Direction dir = null) : base(e, dir) {
 		if(target == null) {

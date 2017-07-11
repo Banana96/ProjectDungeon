@@ -1,8 +1,6 @@
 ﻿public class ItemSlot {
 	public Item item { get; private set; }
-	public bool empty {
-		get { return item == null; }
-	}
+	public bool empty => item == null;
 
 	public ItemSlot(Item it = null, bool mult = false) {
 		item = it;

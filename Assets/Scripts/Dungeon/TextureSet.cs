@@ -17,42 +17,27 @@ public class TextureSet {
 	private int[] openDoor;
 	private int[] closedDoor;
 
-	public int defaultWall {
-		get { return wall[0]; }
-	}
-	public int defaultFloor {
-		get { return floor[0]; }
-	}
-	public int defaultCeiling {
-		get { return ceiling[0]; }
-	}
+	public int defaultWall => wall[0];
 
-	public int doorClosed {
-		get { return closedDoor[0]; }
-	}
-	public int doorOpen {
-		get { return openDoor[0]; }
-	}
+	public int defaultFloor => floor[0];
+	public int defaultCeiling => ceiling[0];
 
-	public bool multipleWalls {
-		get { return wall.Length > 1; }
-	}
-	public bool multipleFloors {
-		get { return floor.Length > 1; }
-	}
-	public bool multipleCeilings {
-		get { return ceiling.Length > 1; }
-	}
+	public int doorClosed => closedDoor[0];
+	public int doorOpen => openDoor[0];
+
+	public bool multipleWalls => wall.Length > 1;
+	public bool multipleFloors => floor.Length > 1;
+	public bool multipleCeilings => ceiling.Length > 1;
 
 	public int rWall(Random r) {
-		return multipleWalls ? wall[r.Next(wall.Length)] : wall[0];
+		return multipleWalls ? wall[r.Next(wall.Length)] : defaultWall;
 	}
 
 	public int rFloor(Random r) {
-		return multipleFloors ? floor[r.Next(floor.Length)] : floor[0];
+		return multipleFloors ? floor[r.Next(floor.Length)] : defaultFloor;
 	}
 
 	public int rCeiling(Random r) {
-		return multipleCeilings ? ceiling[r.Next(floor.Length)] : ceiling[0];
+		return multipleCeilings ? ceiling[r.Next(floor.Length)] : defaultCeiling;
 	}
 }

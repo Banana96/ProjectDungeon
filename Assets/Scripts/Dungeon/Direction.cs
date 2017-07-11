@@ -43,24 +43,11 @@ public sealed class Direction {
 		);
 	}
 
-	public int Num {
-		get { return num; }
-	}
-
-	public int UX {
-		get { return (int) unit.x; }
-	}
-	public int UZ {
-		get { return (int) unit.y; }
-	}
-
-	public int Rot {
-		get { return num * 90; }
-	}
-
-	public string WallName {
-		get { return name; }
-	}
+	public int Num => num;
+	public int UX => (int) unit.x;
+	public int UZ => (int) unit.y;
+	public int Rot => num * 90;
+	public string WallName => name;
 
 	public float GetAngle() {
 		if(this == North) return 0;

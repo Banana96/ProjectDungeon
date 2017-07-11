@@ -2,9 +2,7 @@
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
-	private Animator anim {
-		get { return GetComponent<Animator>(); }
-	}
+	private Animator anim => GetComponent<Animator>();
 
 	public void NewGame() {
 		anim.Play("OnNewGame");

@@ -14,7 +14,7 @@ public class DungeonGenerator : DungeonBuilder {
 		int width = rng.Next(Dungeon.MinSize, Dungeon.MaxSize),
 			height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
 
-		Debug.Log(string.Format("Dungeon size: {0}x{1}", width, height));
+		Debug.Log($"Dungeon size: {width}x{height}");
 
 		dungeon.InitBlockArray(width, height);
 
