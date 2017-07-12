@@ -60,8 +60,6 @@ public class AreaLinker : FeatureGenerator {
 			}
 		}
 
-		Debug.Log("Areas linked to corridors");
-
 		return true;
 	}
 }

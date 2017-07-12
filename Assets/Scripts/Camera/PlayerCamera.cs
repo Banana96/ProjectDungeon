@@ -5,10 +5,8 @@ using Size = Position;
 /// <summary>Camera viewport pixelizer.</summary>
 [RequireComponent(typeof(Camera))]
 public class PlayerCamera : MonoBehaviour {
-	private const int LandscapeFOV = 70;
-	private const int PortraitFOV = 90;
-
-	[Range(1, 5)] public int pixelationLevel = 2;
+	private int pixelationLevel => Application.isMobilePlatform ? 3 : 2;
+	private int FOV => isLandscape ? 70 : 100;
 
 	private Size resolution;
 	private DeviceOrientation orientation;
@@ -55,7 +53,7 @@ public class PlayerCamera : MonoBehaviour {
 		var cam = GetComponent<Camera>();
 		cam.targetTexture = texture;
 
-		cam.fieldOfView = isLandscape ? LandscapeFOV : PortraitFOV;
+		cam.fieldOfView = FOV;
 
 		if(renderCanvasObject == null) {
 			renderCanvasObject = Instantiate(Resources.Load<GameObject>("Prefabs/RenderCanvas"));

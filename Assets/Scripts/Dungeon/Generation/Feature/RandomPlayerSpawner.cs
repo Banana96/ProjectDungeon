@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using Random = System.Random;
+﻿using Random = System.Random;
 
 /// <summary>Spawn player in random free position in a dungeon.</summary>
 public class RandomPlayerSpawner : FeatureGenerator {
@@ -21,8 +20,6 @@ public class RandomPlayerSpawner : FeatureGenerator {
 
 			tries++;
 		} while(tries < MaxTries);
-
-		Debug.Log("Player spawned");
 
 		return true;
 	}

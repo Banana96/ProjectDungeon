@@ -40,8 +40,6 @@ public class DeadEndsRemover : FeatureGenerator {
 			});
 		} while(removedEnds > 0 && removedTotal <= max);
 
-		Debug.Log("Removed dead ends");
-
 		return true;
 	}
 }

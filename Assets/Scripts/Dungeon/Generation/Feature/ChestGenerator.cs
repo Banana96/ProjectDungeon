@@ -22,8 +22,6 @@ public class ChestGenerator : FeatureGenerator {
 			}
 		}
 
-		Debug.Log("Picked " + pickedAreas.Count + " areas for chests");
-
 		foreach(var a in pickedAreas) {
 			Position pos;
 
