@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
 		if(playMode == PlayMode.Campaign) {
 			builder = new TutorialMission(dungeon);
 		} else {
-			builder = new DungeonGenerator(dungeon, "asdf");
+			builder = new DungeonGenerator(dungeon);
 		}
 
 		builder.Build();
