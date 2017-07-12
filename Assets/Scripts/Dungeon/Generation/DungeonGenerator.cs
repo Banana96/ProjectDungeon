@@ -11,7 +11,7 @@ public class DungeonGenerator : DungeonBuilder {
 	public DungeonGenerator(Dungeon d, string s = "") : base(d) {
 		seed = s;
 
-		buildProcess += Init;
+		buildProcess += Init;	
 		buildProcess += Generate;
 		buildProcess += BuildMesh;
 	}
@@ -23,10 +23,10 @@ public class DungeonGenerator : DungeonBuilder {
 		}
 
 		var result = 0;
-		var i = 1;
+		var i = 0;
 
 		foreach(var letter in seed) {
-			result += letter * i++;
+			result += letter * (int)Mathf.Pow(10, i++);
 		}
 
 		return result;
@@ -39,7 +39,7 @@ public class DungeonGenerator : DungeonBuilder {
 			new AreaGenerator(),
 			new CorridorGenerator(),
 			new AreaLinker(),
-//			new DeadEndsRemover(),
+			new DeadEndsRemover(),
 			new RandomPlayerSpawner()
 		};
 

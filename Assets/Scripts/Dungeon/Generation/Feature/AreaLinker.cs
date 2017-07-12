@@ -27,7 +27,7 @@ public class AreaLinker : FeatureGenerator {
 				var e = edges[i];
 				var adj = dungeon.getAdjBlock(e.Item1, e.Item2);
 
-				if(adj == null || adj.isAreaBlock()) {
+				if(adj == null || adj.areaBlock) {
 					edges.Remove(e);
 					i--;
 				}

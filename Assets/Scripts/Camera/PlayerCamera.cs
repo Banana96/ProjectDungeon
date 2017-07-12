@@ -1,15 +1,48 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Size = Position;
 
 /// <summary>Camera viewport pixelizer.</summary>
 [RequireComponent(typeof(Camera))]
 public class PlayerCamera : MonoBehaviour {
-	[Range(1, 5)] public int pixelation = 2;
+	private const int LandscapeFOV = 70;
+	private const int PortraitFOV = 90;
+
+	[Range(1, 5)] public int pixelationLevel = 2;
+
+	private Size resolution;
+	private DeviceOrientation orientation;
+
+	private Size currentRes => new Size(Screen.width, Screen.height);
+	private DeviceOrientation currentOrient => Input.deviceOrientation;
+
+	private GameObject renderCanvasObject { get; set; }
+
+	private bool isLandscape =>
+		orientation == DeviceOrientation.LandscapeLeft
+		|| orientation == DeviceOrientation.LandscapeRight
+		|| resolution.x > resolution.y;
 
 	private void Start() {
-		var pxFactor = Mathf.Pow(2, -pixelation);
-		var width = (int) (Screen.width * pxFactor);
-		var height = (int) (Screen.height * pxFactor);
+		resolution = new Size(Screen.width, Screen.height);
+		orientation = Input.deviceOrientation;
+
+		ReloadCanvas();
+	}
+
+	private void FixedUpdate() {
+		if(orientation != currentOrient || !Size.Compare(resolution, currentRes)) {
+			orientation = currentOrient;
+			resolution = currentRes;
+
+			ReloadCanvas();
+		}
+	}
+
+	private void ReloadCanvas() {
+		var pxFactor = Mathf.Pow(2, -pixelationLevel);
+		var width = (int)(resolution.x * pxFactor);
+		var height = (int)(resolution.y * pxFactor);
 
 		var texture = new RenderTexture(width, height, 0) {
 			name = "PlayerRender",
@@ -19,13 +52,16 @@ public class PlayerCamera : MonoBehaviour {
 			depth = 32
 		};
 
-		var camera = GetComponent<Camera>();
-		camera.targetTexture = texture;
+		var cam = GetComponent<Camera>();
+		cam.targetTexture = texture;
 
-		var render = GameObject.Find("RenderCanvas")
-					?? Instantiate(Resources.Load<GameObject>("Prefabs/RenderCanvas"));
+		cam.fieldOfView = isLandscape ? LandscapeFOV : PortraitFOV;
 
-		var renderImage = render.transform.Find("PlayerRender").GetComponent<RawImage>();
+		if(renderCanvasObject == null) {
+			renderCanvasObject = Instantiate(Resources.Load<GameObject>("Prefabs/RenderCanvas"));
+		}
+
+		var renderImage = renderCanvasObject.transform.Find("PlayerRender").GetComponent<RawImage>();
 		renderImage.texture = texture;
 	}
 }

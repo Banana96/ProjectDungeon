@@ -9,7 +9,7 @@ public class Block {
 	/// <summary>Is side of block passable.</summary>
 	private readonly bool[] passable = {false, false, false, false};
 
-	private bool areaBlock;
+	public bool areaBlock { get; private set; }
 
 	/// <summary>Count textured walls of this block.</summary>
 	private int wallCount {
@@ -45,8 +45,10 @@ public class Block {
 	public int textureCount {
 		get {
 			var count = wallCount;
-			if(hasCeilingTexture()) count++;
-			if(hasFloorTexture()) count++;
+
+			if(hasCeilingTexture() || hasFloorTexture()) {
+				count++;
+			}
 
 			return count;
 		}
@@ -221,10 +223,6 @@ public class Block {
 
 	public Block setAllUnpassable() {
 		return setUnpassable(Direction.All);
-	}
-
-	public bool isAreaBlock() {
-		return areaBlock;
 	}
 
 	public Block setAreaBlock() {

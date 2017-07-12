@@ -4,7 +4,17 @@ using Random = System.Random;
 /// <summary>Removes corridors, that are dead ends (have only one passable side).</summary>
 public class DeadEndsRemover : FeatureGenerator {
 	public bool generate(Dungeon dungeon, Random rng) {
-		var max = rng.Next(dungeon.Width * dungeon.Height);
+		var corridorBlocks = 0;	
+
+		dungeon.ForEachExistingBlock(delegate(Position pos, Block b) {
+			if(!b.areaBlock) {
+				corridorBlocks++;
+			}
+		});
+
+		var max = corridorBlocks * 3 / 4;
+
+		var removedTotal = 0;
 		var removedEnds = 0;
 
 		do {
@@ -23,10 +33,12 @@ public class DeadEndsRemover : FeatureGenerator {
 					}
 
 					dungeon.removeBlock(p);
+
+					removedTotal++;
 					removedEnds++;
 				}
 			});
-		} while(removedEnds > 0 || removedEnds == max);
+		} while(removedEnds > 0 && removedTotal <= max);
 
 		Debug.Log("Removed dead ends");
 

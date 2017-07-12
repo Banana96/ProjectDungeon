@@ -76,11 +76,9 @@ public class PlayerInterface : MonoBehaviour {
 				Move(player.facing.GetOpposite());
 			} else if(Input.GetKey(KeyCode.A)) {
 				Move(player.facing.GetPrev());
+			} else if(Input.GetKey(KeyCode.Escape)) {
+				Application.Quit();
 			}
-		}
-
-		if(Input.GetKeyDown(KeyCode.Escape)) {
-			Application.Quit();
 		}
 
 		if(Input.touchCount > 0) {

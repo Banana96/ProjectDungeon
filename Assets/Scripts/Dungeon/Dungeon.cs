@@ -17,9 +17,7 @@ public class Dungeon : MonoBehaviour {
 		}
 
 		private set {
-			if(_inst == null) {
-				_inst = value;
-			}
+			
 		}
 	}
 	#endregion
@@ -60,7 +58,13 @@ public class Dungeon : MonoBehaviour {
 
 	#region Initialization
 	void Awake() {
-		Instance = this;
+		if(_inst == null) {
+			_inst = this;
+		} else {
+			Debug.LogWarning("An instance of Dungeon already exists");
+			enabled = false;
+			return;
+		}
 
 		var entTsf = transform.Find(EntitiesObjName);
 		entitiesRoot = entTsf?.gameObject ?? new GameObject(EntitiesObjName);
