@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public class PlayerInterface : MonoBehaviour {
-	private Dungeon dng;
+	private Dungeon dng => Dungeon.Instance;
 	private Player player;
 
 	private Camera cam;
@@ -13,8 +13,6 @@ public class PlayerInterface : MonoBehaviour {
 	public Response requestResponse;
 
 	public void attachDungeon() {
-		dng = Dungeon.Instance;
-		
 		if(!dng) {
 			Debug.LogError(new ArgumentException("Dungeon can't be null"));
 			enabled = false;
