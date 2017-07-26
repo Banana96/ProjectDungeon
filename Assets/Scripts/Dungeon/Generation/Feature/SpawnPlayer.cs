@@ -1,10 +1,7 @@
-﻿using Random = System.Random;
-
-/// <summary>Spawn player in random free position in a dungeon.</summary>
-public class RandomPlayerSpawner : FeatureGenerator {
+﻿public partial class DungeonGenerator {
 	private const int MaxTries = 32;
 
-	public bool generate(Dungeon dungeon, Random rng) {
+	private void SpawnPlayer() {
 		var tries = 0;
 
 		do {
@@ -20,7 +17,5 @@ public class RandomPlayerSpawner : FeatureGenerator {
 
 			tries++;
 		} while(tries < MaxTries);
-
-		return true;
 	}
 }

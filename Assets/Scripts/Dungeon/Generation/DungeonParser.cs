@@ -108,8 +108,8 @@ public class DungeonParser : DungeonBuilder {
 				foreach(var dir in Direction.All) {
 					if(adj[dir.Num] != null) {
 						adj[dir.Num]
-							.setPassable(dir.GetOpposite())
-							.setTexture(dir.GetOpposite());
+							.setPassable(dir.Opposite)
+							.setTexture(dir.Opposite);
 
 						block
 							.setPassable(dir)
@@ -179,9 +179,9 @@ public class DungeonParser : DungeonBuilder {
 				.setPassable(dir);
 
 			block2
-				.setTexture(dungeon.textures.doorOpen, dir.GetOpposite())
-				.setSpecial(dir.GetOpposite())
-				.setPassable(dir.GetOpposite());
+				.setTexture(dungeon.textures.doorOpen, dir.Opposite)
+				.setSpecial(dir.Opposite)
+				.setPassable(dir.Opposite);
 		}
 	}
 

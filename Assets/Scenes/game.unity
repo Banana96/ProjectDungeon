@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playMode: 1
+  generatorSeed: 1548905085
 --- !u!4 &404672575
 Transform:
   m_ObjectHideFlags: 0

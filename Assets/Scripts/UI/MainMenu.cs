@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour {
 		anim.Play("OnNewGame");
 	}
 
-	public void OnFinishNewGame() {
+	public void NewGameAfterAnim() {
 		SceneManager.LoadScene("game");
 	}
 

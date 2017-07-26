@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-using Random = System.Random;
+﻿using Random = System.Random;
 
-/// <summary>Generates <c>Area</c> objects for generated dungeon.</summary>
-public class AreaGenerator : FeatureGenerator {
+public partial class DungeonGenerator {
 	private const int MinAreaSize = 2;
 	private const int MaxAreaSize = 4;
 	private const int MinAreaTries = 32;
@@ -19,7 +17,7 @@ public class AreaGenerator : FeatureGenerator {
 		return new Area(x, y, w, h);
 	}
 
-	public bool generate(Dungeon dungeon, Random rng) {
+	private void GenerateAreas() {
 		dungeon.areas.Add(randomArea(dungeon, rng));
 
 		var tries = rng.Next(MinAreaTries, MaxAreaTries);
@@ -42,7 +40,5 @@ public class AreaGenerator : FeatureGenerator {
 		foreach(var area in dungeon.areas) {
 			area.draw(dungeon);
 		}
-
-		return true;
 	}
 }

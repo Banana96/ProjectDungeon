@@ -3,20 +3,26 @@ using UnityEngine;
 
 [CustomEditor(typeof(Dungeon))]
 public class DunegonInspector : Editor {
-	public override void OnInspectorGUI() {
-		var dungeon = (Dungeon) target;
-		
-		// Size
-		EditorGUILayout.LabelField("Size: ", dungeon.Width+"x"+dungeon.Height);
-		
-		// Size editor
-		if(GUILayout.Button("Resize")) {
-			DungeonSizeEditor.OpenWindow();
-		}
+	private Dungeon dng => (Dungeon)target;
 
-		// Block editor
-		if(GUILayout.Button("Edit blocks")) {
-			DunegonBlockEditor.OpenWindow();
+	public override void OnInspectorGUI() {
+		// Size
+		EditorGUILayout.LabelField("Size: ", dng.Width+"x"+dng.Height);
+
+		if(!Application.isPlaying) {
+			// Size editor
+			if(GUILayout.Button("Resize")) {
+				DungeonSizeEditor.OpenWindow();
+			}
+		}
+	}
+
+	public void OnSceneGUI() {
+		if(Application.isPlaying) {
+			Handles.DrawWireCube(
+				new Vector3(dng.Width/2 - 0.5f, 0.5f, dng.Height/2 - 0.5f),
+				new Vector3(dng.Width, 1, dng.Height)
+			);
 		}
 	}
 }

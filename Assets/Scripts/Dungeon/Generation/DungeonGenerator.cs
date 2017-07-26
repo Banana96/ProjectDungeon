@@ -3,46 +3,33 @@ using UnityEngine;
 using Random = System.Random;
 
 /// <summary>Builds procedurally generated dungeon from given or random seed.</summary>
-public class DungeonGenerator : DungeonBuilder {
-	private readonly string seed;
+public partial class DungeonGenerator : DungeonBuilder {
+	public int seed { get; private set; }
 	private Random rng;
-	private List<FeatureGenerator> features;
 
-	public DungeonGenerator(Dungeon d, string s = "") : base(d) {
+	public DungeonGenerator(Dungeon d, int s = 0) : base(d) {
+		if(s == 0) {
+			s = new Random().Next();
+		}
+
 		seed = s;
+		rng = new Random(seed);
 
-		buildProcess += Init;	
-		buildProcess += Generate;
+		buildProcess += InitDimension;
+		buildProcess += GenerateAreas;
+		buildProcess += GenerateCorridors;
+		buildProcess += LinkAreas;
+		buildProcess += RemoveDeadEnds;
+		buildProcess += SpawnPlayer;
+		buildProcess += DecorateBlocks;
 		buildProcess += BuildMesh;
+
+		if(Application.isEditor || Debug.isDebugBuild) {
+			buildProcess += IntegrityCheck;
+		}
 	}
 
-	/// <summary>Converts entered seed string to int seed, or returns random one.</summary>
-	private int getSeedResult() {
-		if(seed.Length == 0) {
-			return new Random().Next();
-		}
-
-		var result = 0;
-		var i = 0;
-
-		foreach(var letter in seed) {
-			result += letter * (int)Mathf.Pow(10, i++);
-		}
-
-		return result;
-	}
-
-	private void Init() {
-		rng = new Random(getSeedResult());
-
-		features = new List<FeatureGenerator> {
-			new AreaGenerator(),
-			new CorridorGenerator(),
-			new AreaLinker(),
-			new DeadEndsRemover(),
-			new RandomPlayerSpawner()
-		};
-
+	private void InitDimension() {
 		int width = rng.Next(Dungeon.MinSize, Dungeon.MaxSize),
 			height = rng.Next(Dungeon.MinSize, Dungeon.MaxSize);
 
@@ -51,15 +38,8 @@ public class DungeonGenerator : DungeonBuilder {
 		Debug.Log($"Dungeon size: {width}x{height}");
 	}
 
-	private void Generate() {
-		foreach(var f in features) {
-			Debug.Assert(f.generate(dungeon, rng), f + " failed");
-		}
-
-		if(Application.isEditor) {
-			var integrity = FloodFill.BlockIntegrityTest(dungeon);
-			Debug.Assert(integrity, "Generated dungeon is fractured!");
-			Application.Quit();
-		}
+	private void IntegrityCheck() {
+		var result = FloodFill.BlockIntegrityTest(dungeon);
+		Debug.Assert(result, "Generated dungeon is fractured!");
 	}
 }

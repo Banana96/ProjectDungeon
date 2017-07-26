@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Random = System.Random;
 
-/// <summary>Spawns chests in dungeon.</summary>
-public class ChestGenerator : FeatureGenerator {
-	private const int SpawnChance = 50;
+public partial class DungeonGenerator {
+	private const int SpawnChance = 20;
 
-	public bool generate(Dungeon dungeon, Random rng) {
+	private void SpawnChests() {
 		var areaCount = dungeon.areas.Count;
 		var chestCount = Mathf.FloorToInt(areaCount * (SpawnChance / 100));
 		chestCount = (chestCount == 0 ? 1 : chestCount);
@@ -31,7 +29,5 @@ public class ChestGenerator : FeatureGenerator {
 
 			dungeon.spawnChest(pos, Direction.North, false);
 		}
-
-		return true;
 	}
 }

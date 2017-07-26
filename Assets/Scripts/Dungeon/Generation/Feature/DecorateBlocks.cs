@@ -1,11 +1,7 @@
-﻿using System;
-
-/// <summary>Decorates block with <c>TextureSet</c> from dungeon</summary>
-/// <see cref="Dungeon.textures"/>
-public class BlockDecorator : FeatureGenerator {
+﻿public partial class DungeonGenerator {
 	private const int DecorationChance = 12;
 
-	public bool generate(Dungeon dungeon, Random rng) {
+	private void DecorateBlocks() {
 		var tx = dungeon.textures;
 
 		for(var y = 0; y < dungeon.Height; y++) {
@@ -29,7 +25,5 @@ public class BlockDecorator : FeatureGenerator {
 				}
 			}
 		}
-
-		return true;
 	}
 }

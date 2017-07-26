@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Size = Position;
 
@@ -59,7 +60,10 @@ public class PlayerCamera : MonoBehaviour {
 			renderCanvasObject = Instantiate(Resources.Load<GameObject>("Prefabs/RenderCanvas"));
 		}
 
-		var renderImage = renderCanvasObject.transform.Find("PlayerRender").GetComponent<RawImage>();
+		var renderImage = renderCanvasObject
+			.transform.Find("PlayerRender")
+			.GetComponent<RawImage>();
+
 		renderImage.texture = texture;
 	}
 }

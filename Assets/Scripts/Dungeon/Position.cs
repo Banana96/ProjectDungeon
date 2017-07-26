@@ -43,12 +43,8 @@
 	}
 
 	public override bool Equals(object obj) {
-		if(obj != null && obj.GetType() == typeof(Position)) {
-			var pos = obj as Position;
-			return pos != null && x == pos.x && y == pos.y;
-		}
-
-		return false;
+		var pos = obj as Position;
+		return pos != null && x == pos.x && y == pos.y;
 	}
 
 	public override int GetHashCode() {

@@ -66,7 +66,7 @@ public class Composer {
 	/// <param name="a">Area to be created.</param>
 	/// <returns>This <c>Composer</c>.</returns>
 	public Composer area(Area a) {
-		a.ForEachValidPos(dungeon, delegate(Position pos) { dungeon.setBlock(pos); });
+		a.draw(dungeon);
 
 		return this;
 	}

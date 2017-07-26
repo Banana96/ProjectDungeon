@@ -2,10 +2,10 @@
 using UnityEngine;
 
 public sealed class Direction {
-	public static readonly Direction North = new Direction(0, "North");
-	public static readonly Direction East = new Direction(1, "East");
-	public static readonly Direction South = new Direction(2, "South");
-	public static readonly Direction West = new Direction(3, "West");
+	public static readonly Direction North	= new Direction(0, "North");
+	public static readonly Direction East	= new Direction(1, "East");
+	public static readonly Direction South	= new Direction(2, "South");
+	public static readonly Direction West	= new Direction(3, "West");
 
 	public static readonly Direction[] All = {
 		North, East, South, West
@@ -15,9 +15,8 @@ public sealed class Direction {
 		return U.RandArrElem(All, r);
 	}
 
-	public static Direction FromAngle(float a) {
-		while(a < 0) a += 360;
-		while(a >= 360) a -= 360;
+	public static Direction FromAngle(float angle) {
+		int a = ((int)angle % 360 + 360) % 360;
 
 		if((a >= 315 & a <= 360) | (a >= 0 & a < 45)) return North;
 		if(a >= 45 & a < 135) return East;
@@ -29,11 +28,14 @@ public sealed class Direction {
 		return null;
 	}
 
-	private readonly int num;
+	public static implicit operator int(Direction dir) => dir.num;
+	public static implicit operator Direction(int n) => All[(n % 4 + 4) % 4];
+
+	private readonly byte num;
 	private readonly Vector2 unit;
 	private readonly string name;
 
-	private Direction(int nm, string n) {
+	private Direction(byte nm, string n) {
 		num = nm;
 		name = n;
 
@@ -49,31 +51,8 @@ public sealed class Direction {
 	public int Rot => num * 90;
 	public string WallName => name;
 
-	public float GetAngle() {
-		if(this == North) return 0;
-		if(this == East) return 90;
-		if(this == South) return 180;
-		return 270;
-	}
-
-	public Direction GetOpposite() {
-		if(this == North) return South;
-		if(this == East) return West;
-		if(this == South) return North;
-		return East;
-	}
-
-	public Direction GetNext() {
-		if(this == North) return East;
-		if(this == East) return South;
-		if(this == South) return West;
-		return North;
-	}
-
-	public Direction GetPrev() {
-		if(this == North) return West;
-		if(this == East) return North;
-		if(this == South) return East;
-		return South;
-	}
+	public float Angle => num * 90;
+	public Direction Opposite => this + 2;
+	public Direction Next => this + 1;
+	public Direction Prev => this - 1;
 }

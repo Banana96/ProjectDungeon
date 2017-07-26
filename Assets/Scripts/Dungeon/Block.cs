@@ -11,6 +11,10 @@ public class Block {
 
 	public bool areaBlock { get; private set; }
 
+	public int[] Textures => textures;
+	public bool[] Special => special;
+	public bool[] Passable => passable;
+
 	/// <summary>Count textured walls of this block.</summary>
 	private int wallCount {
 		get {

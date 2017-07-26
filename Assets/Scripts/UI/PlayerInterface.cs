@@ -30,7 +30,7 @@ public class PlayerInterface : MonoBehaviour {
 		var cameraObject = Instantiate(Resources.Load<GameObject>("Prefabs/PlayerCamera"));
 		cam = cameraObject.GetComponent<Camera>();
 		cam.transform.position = player.transform.position + new Vector3(0, 0.5f, 0);
-		cam.transform.rotation = Quaternion.Euler(0, player.facing.GetAngle(), 0);
+		cam.transform.rotation = Quaternion.Euler(0, player.facing.Angle, 0);
 	}
 
 	private void Move(Direction dir) {
@@ -69,11 +69,11 @@ public class PlayerInterface : MonoBehaviour {
 			} else if(Input.GetKey(KeyCode.E)) {
 				Rotate(true);
 			} else if(Input.GetKey(KeyCode.D)) {
-				Move(player.facing.GetNext());
+				Move(player.facing.Next);
 			} else if(Input.GetKey(KeyCode.S)) {
-				Move(player.facing.GetOpposite());
+				Move(player.facing.Opposite);
 			} else if(Input.GetKey(KeyCode.A)) {
-				Move(player.facing.GetPrev());
+				Move(player.facing.Prev);
 			} else if(Input.GetKey(KeyCode.Escape)) {
 				Application.Quit();
 			}
@@ -95,7 +95,7 @@ public class PlayerInterface : MonoBehaviour {
 				} else if(moveDir == Direction.East) {
 					Rotate(true);
 				} else if(moveDir == Direction.South) {
-					Move(player.facing.GetOpposite());
+					Move(player.facing.Opposite);
 				} else if(moveDir == Direction.West) {
 					Rotate(false);
 				}

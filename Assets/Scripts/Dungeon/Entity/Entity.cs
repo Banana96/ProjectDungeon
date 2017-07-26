@@ -49,7 +49,7 @@ public abstract class Entity : MonoBehaviour {
 
 		set {
 			if(value != null) {
-				transform.rotation = Quaternion.Euler(0, value.GetAngle(), 0);
+				transform.rotation = Quaternion.Euler(0, value.Angle, 0);
 			}
 		}
 	}

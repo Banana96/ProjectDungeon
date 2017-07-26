@@ -49,6 +49,7 @@ public class DungeonMeshBuilder {
 	private const int ChunkSize = 8;
 
 	private static Dungeon dungeon => Dungeon.Instance;
+	private static Material wallMaterial;
 	private static Transform staticMesh;
 
 	private static Mesh CreateWallMesh(int wall, int x, int z) {
@@ -56,21 +57,21 @@ public class DungeonMeshBuilder {
 
 		var w = QuadVertices[wall];
 
-		m.vertices = new[] {
+		m.SetVertices(new List<Vector3> {
 			new Vector3(w[0].x + x, w[0].y, w[0].z + z),
 			new Vector3(w[1].x + x, w[1].y, w[1].z + z),
 			new Vector3(w[2].x + x, w[2].y, w[2].z + z),
 			new Vector3(w[3].x + x, w[3].y, w[3].z + z)
-		};
+		});
 
-		m.uv = new[] {
+		m.SetUVs(0, new List<Vector2> {
 			new Vector2(0, 0),
 			new Vector2(0, 1),
 			new Vector2(1, 1),
 			new Vector2(1, 0)
-		};
+		});
 
-		m.triangles = new[] { 0, 1, 2, 0, 2, 3 };
+		m.SetTriangles(new[] { 0, 1, 2, 0, 2, 3 }, 0);
 
 		return m;
 	}
@@ -106,14 +107,13 @@ public class DungeonMeshBuilder {
 		}
 	}
 
-	public static void BuildChunk(Position chPos) {
+	public static List<GameObject> BuildChunk(Position chPos) {
 		var meshGroup = new Dictionary<int, List<Mesh>>();
 
 		var p0 = new Position(chPos.x * ChunkSize, chPos.y * ChunkSize);
 		var p1 = p0.copy().add(ChunkSize, ChunkSize);
 
-		p1.x = Mathf.Min(p1.x, dungeon.Width);
-		p1.y = Mathf.Min(p1.y, dungeon.Height);
+		p1 = new Position(Mathf.Min(p1.x, dungeon.Width), Mathf.Min(p1.y, dungeon.Height));
 
 		var p = p0.copy();
 
@@ -123,16 +123,16 @@ public class DungeonMeshBuilder {
 			}
 		}
 
+		var meshes = new List<GameObject>();
+
 		foreach(var texture in meshGroup.Keys) {
 			var group = meshGroup[texture];
-
 			var mgName = $"_meshGroup_{chPos.x}_{chPos.y}_{texture}";
-
 			var meshGroupObject = GameObject.Find(mgName) ?? new GameObject(mgName);
 
 			meshGroupObject.transform.parent = staticMesh.transform;
 
-			var mf = meshGroupObject.AddComponent<MeshFilter>( );
+			var mf = meshGroupObject.AddComponent<MeshFilter>();
 			var combines = new CombineInstance[group.Count];
 
 			for(var i = 0; i < combines.Length; i++) {
@@ -145,17 +145,24 @@ public class DungeonMeshBuilder {
 
 			mf.sharedMesh = shared;
 
+			if(wallMaterial == null) {
+				wallMaterial = Resources.Load<Material>("Materials/WallEnv");
+			}
+
 			var mr = meshGroupObject.AddComponent<MeshRenderer>();
-			mr.material = Resources.Load<Material>("Materials/WallEnv");
-			mr.material.mainTexture = Resources.Load<Texture>("Textures/Environment/" + texture);
+			mr.material = wallMaterial;
+			mr.material.mainTexture = Resources.Load<Texture>($"Textures/Environment/{texture}");
 
 			mr.shadowCastingMode = ShadowCastingMode.Off;
 			mr.receiveShadows = false;
 		}
+
+		return meshes;
 	}
 
 	public static void BuildMesh() {
-		staticMesh = dungeon.gameObject.transform.Find("_staticMesh");
+		var staticMeshObject = dungeon.gameObject;
+		staticMesh = staticMeshObject.transform.Find("_staticMesh");
 
 		if(staticMesh == null) {
 			staticMesh = new GameObject("_staticMesh").transform;
@@ -167,10 +174,14 @@ public class DungeonMeshBuilder {
 			Mathf.CeilToInt((float) dungeon.Height / ChunkSize)
 		);
 
+		var meshes = new List<GameObject>();
+
 		for(var x = 0; x < chunkNum.x; x++) {
 			for(var y = 0; y < chunkNum.y; y++) {
-				BuildChunk(new Position(x, y));
+				meshes.AddRange(BuildChunk(new Position(x, y)));
 			}
 		}
+
+		StaticBatchingUtility.Combine(meshes.ToArray(), staticMesh.gameObject);
 	}
 }

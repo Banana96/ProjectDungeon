@@ -17,7 +17,9 @@ public class Dungeon : MonoBehaviour {
 		}
 
 		private set {
-			
+			if(_inst == null) {
+				_inst = value;
+			}
 		}
 	}
 	#endregion
@@ -66,6 +68,9 @@ public class Dungeon : MonoBehaviour {
 			return;
 		}
 
+		gameObject.transform.position = Vector3.zero;
+		gameObject.isStatic = true;
+
 		var entTsf = transform.Find(EntitiesObjName);
 		entitiesRoot = entTsf?.gameObject ?? new GameObject(EntitiesObjName);
 
@@ -109,13 +114,13 @@ public class Dungeon : MonoBehaviour {
 	/// <summary>Execute <c>action</c> for each possible block on level.</summary>
 	/// /// <param name="action">Action performed on each <c>Block</c> in <c>Position</c></param>
 	public void ForEachBlock(Action<Position, Block> action) {
-		ForEachPosition(delegate(Position pos) { action.Invoke(pos, getBlock(pos)); });
+		ForEachPosition(delegate (Position pos) { action.Invoke(pos, getBlock(pos)); });
 	}
 
 	/// <summary>Execute <c>action</c> for each existing block on level.</summary>
 	/// /// <param name="action">Action performed on each existing <c>Block</c></param>
 	public void ForEachExistingBlock(Action<Position, Block> action) {
-		ForEachPosition(delegate(Position pos) {
+		ForEachPosition(delegate (Position pos) {
 			var block = getBlock(pos);
 			if(block != null) {
 				action.Invoke(pos, block);
@@ -125,11 +130,6 @@ public class Dungeon : MonoBehaviour {
 	#endregion
 
 	#region Block operators
-	/// <summary>Validates if given coordinates are within level bounds.</summary>
-	/// <returns>Are coordinates in level bounds.</returns>
-	private bool isPosValid(int x, int z) {
-		return x >= 0 && x < Width && z >= 0 && z < Height;
-	}
 
 	/// <summary>Validates if given <c>Position</c> is within level bounds.</summary>
 	/// <returns>Is position in level bounds.</returns>
@@ -144,7 +144,7 @@ public class Dungeon : MonoBehaviour {
 
 		if(b1 != null && b2 != null) {
 			if(b1.isPassable(d)) {
-				if(b2.isPassable(d.GetOpposite())) {
+				if(b2.isPassable(d.Opposite)) {
 					if(getEntity(p.add(d)) == null) {
 						return true;
 					}
