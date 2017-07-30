@@ -21,21 +21,36 @@ public class Area {
 
 	public void draw(Dungeon d) {
 		ForEachValidPos(d, delegate(Position pos) {
-			var b = d.setBlock(pos)
-					.removeWallTextures()
-					.setAllPassable()
-					.setAreaBlock();
+			var b = d.setBlock(pos);
+				//.removeWallTexture(Direction.All)
+				//.setAllPassable()
+				//.setAreaBlock();
+			
+			foreach(var dir in Direction.All) {
+				b.textures[dir] = -1;
+				b.passable[dir] = true;
+			}
+
+			b.areaBlock = true;
 
 			if(pos.x == minX) {
-				b.setTexture(0, Direction.West).setUnpassable(Direction.West);
+				//b.setTexture(0, Direction.West).setUnpassable(Direction.West);
+				b.textures[Direction.West] = 0;
+				b.passable[Direction.West] = false;
 			} else if(pos.x == maxX) {
-				b.setTexture(0, Direction.East).setUnpassable(Direction.East);
+				//b.setTexture(0, Direction.East).setUnpassable(Direction.East);
+				b.textures[Direction.East] = 0;
+				b.passable[Direction.East] = false;
 			}
 
 			if(pos.y == minY) {
-				b.setTexture(0, Direction.South).setUnpassable(Direction.South);
+				//b.setTexture(0, Direction.South).setUnpassable(Direction.South);
+				b.textures[Direction.South] = 0;
+				b.passable[Direction.South] = false;
 			} else if(pos.y == maxY) {
-				b.setTexture(0, Direction.North).setUnpassable(Direction.North);
+				//b.setTexture(0, Direction.North).setUnpassable(Direction.North);
+				b.textures[Direction.North] = 0;
+				b.passable[Direction.North] = false;
 			}
 		});
 	}

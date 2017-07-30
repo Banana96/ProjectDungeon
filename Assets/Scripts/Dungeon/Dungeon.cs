@@ -29,7 +29,7 @@ public class Dungeon : MonoBehaviour {
 	public const int MinSize = 16;
 
 	/// <summary>Maximal size of the level.</summary>
-	public const int MaxSize = 32;
+	public const int MaxSize = 48;
 
 	/// <summary>Name of object containing this <c>Dungeon</c> entities.</summary>
 	private const string EntitiesObjName = "_entities";
@@ -143,8 +143,10 @@ public class Dungeon : MonoBehaviour {
 		Block b1 = getBlock(p), b2 = getAdjBlock(p, d);
 
 		if(b1 != null && b2 != null) {
-			if(b1.isPassable(d)) {
-				if(b2.isPassable(d.Opposite)) {
+			//if(b1.isPassable(d)) {
+			if(b1.passable[d]) {
+				//if(b2.isPassable(d.Opposite)) {
+				if(b2.passable[d.Opposite]) {
 					if(getEntity(p.add(d)) == null) {
 						return true;
 					}
@@ -217,7 +219,7 @@ public class Dungeon : MonoBehaviour {
 
 		foreach(var d in Direction.All) {
 			if(adj[d.Num] != null) {
-				if(adj[d.Num].isSpecial(d)) {
+				if(adj[d.Num].special[d]) {
 					return true;
 				}
 			}
@@ -368,7 +370,7 @@ public class Dungeon : MonoBehaviour {
 			var dir = Direction.North;
 
 			foreach(var d in Direction.All) {
-				if(getBlock(pos).isPassable(d)) {
+				if(getBlock(pos).passable[d]) {
 					dir = d;
 					break;
 				}

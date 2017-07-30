@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = System.Random;
 
 /// <summary>Builds procedurally generated dungeon from given or random seed.</summary>
@@ -21,12 +20,9 @@ public partial class DungeonGenerator : DungeonBuilder {
 		buildProcess += LinkAreas;
 		buildProcess += RemoveDeadEnds;
 		buildProcess += SpawnPlayer;
-		buildProcess += DecorateBlocks;
+		//buildProcess += DecorateBlocks;
 		buildProcess += BuildMesh;
-
-		if(Application.isEditor || Debug.isDebugBuild) {
-			buildProcess += IntegrityCheck;
-		}
+		buildProcess += IntegrityCheck;
 	}
 
 	private void InitDimension() {
@@ -39,7 +35,9 @@ public partial class DungeonGenerator : DungeonBuilder {
 	}
 
 	private void IntegrityCheck() {
-		var result = FloodFill.BlockIntegrityTest(dungeon);
-		Debug.Assert(result, "Generated dungeon is fractured!");
+		if(Application.isEditor || Debug.isDebugBuild) {
+			var result = FloodFill.BlockIntegrityTest(dungeon);
+			Debug.Assert(result, "Generated dungeon is fractured!");
+		}
 	}
 }

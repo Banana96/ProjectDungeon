@@ -130,13 +130,19 @@ public class Composer {
 
 				foreach(var dir in Direction.All) {
 					if(adj[dir.Num] != null) {
-						block
-							.setPassable(dir)
-							.removeTexture(dir);
+						//block
+						//	.setPassable(dir)
+						//	.removeTexture(dir);
+
+						block.passable[dir] = true;
+						block.textures[dir] = -1;
 					} else {
-						block
-							.setUnpassable(dir)
-							.setTexture(0, dir);
+						//block
+						//	.setUnpassable(dir)
+						//	.setTexture(0, dir);
+
+						block.passable[dir] = false;
+						block.textures[dir] = 0;
 					}
 				}
 			}

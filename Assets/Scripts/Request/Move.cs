@@ -1,5 +1,5 @@
 ﻿public class Move : EntityRequest {
-	private Direction direction => target as Direction;
+	private Direction dir => target as Direction;
 
 	public Move(Entity e, Direction dir = null) : base(e, dir) {
 		if(dir == null) {
@@ -9,10 +9,10 @@
 
 	public override bool validateRequest(Dungeon d) {
 		var currentBlock = d.getBlock(caller.position);
-		var adjBlock = d.getAdjBlock(caller.position, direction);
+		var adjBlock = d.getAdjBlock(caller.position, dir);
 
-		if(adjBlock != null && currentBlock.isPassable(direction)) {
-			if(d.getEntity(caller.position + direction) == null) {
+		if(adjBlock != null && currentBlock.passable[dir]) {
+			if(d.getEntity(caller.position + dir) == null) {
 				return true;
 			}
 		}
@@ -21,7 +21,7 @@
 	}
 
 	public override void onValid(Dungeon d) {
-		caller.position += direction;
+		caller.position += dir;
 	}
 
 	public override void onInvalid(Dungeon d) { }

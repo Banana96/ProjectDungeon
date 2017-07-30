@@ -8,7 +8,8 @@
 
 		if(block != null) {
 			foreach(var dir in Direction.All) {
-				if(block.isPassable(dir)) {
+				//if(block.isPassable(dir)) {
+				if(block.passable[dir]) {
 					var nd = p + dir;
 					if(!mark[nd.x, nd.y]) {
 						markBlock(d, nd);

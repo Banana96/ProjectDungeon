@@ -43,8 +43,15 @@ public partial class DungeonGenerator {
 				var d = U.RandArrElem(adj, rng);
 				var n = last + d;
 
-				dungeon.getBlock(last).removeTexture(d).setPassable(d);
-				dungeon.setBlock(n).removeTexture(d.Opposite).setPassable(d.Opposite);
+				//dungeon.getBlock(last).removeTexture(d).setPassable(d);
+				var b1 = dungeon.getBlock(last);
+				b1.textures[d] = -1;
+				b1.passable[d] = true;
+
+				//dungeon.setBlock(n).removeTexture(d.Opposite).setPassable(d.Opposite);
+				var b2 = dungeon.setBlock(n);
+				b2.textures[d.Opposite] = -1;
+				b2.passable[d.Opposite] = true;
 
 				cells.Add(n);
 			}

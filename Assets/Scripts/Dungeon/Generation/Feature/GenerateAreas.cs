@@ -1,10 +1,10 @@
 ﻿using Random = System.Random;
 
 public partial class DungeonGenerator {
-	private const int MinAreaSize = 2;
-	private const int MaxAreaSize = 4;
-	private const int MinAreaTries = 32;
-	private const int MaxAreaTries = 64;
+	private const int MinAreaSize = 3;
+	private const int MaxAreaSize = 5;
+	private const int MinAreaTries = 64;
+	private const int MaxAreaTries = 128;
 
 	/// <summary>Generate random area.</summary>
 	private Area randomArea(Dungeon dungeon, Random rng) {

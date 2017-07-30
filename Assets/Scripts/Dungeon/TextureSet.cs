@@ -2,42 +2,42 @@
 
 public class TextureSet {
 	public static readonly TextureSet Default = new TextureSet {
-		wall = new[] {1, 2},
-		floor = new[] {3, 4},
-		ceiling = new[] {13},
+		wall = new byte[] {1, 2},
+		floor = new byte[] {3, 4},
+		ceiling = new byte[] {13},
 
-		openDoor = new[] {5, 10},
-		closedDoor = new[] {6, 8}
+		openDoor = new byte[] {5, 10},
+		closedDoor = new byte[] {6, 8}
 	};
 
-	private int[] wall;
-	private int[] floor;
-	private int[] ceiling;
+	private byte[] wall;
+	private byte[] floor;
+	private byte[] ceiling;
 
-	private int[] openDoor;
-	private int[] closedDoor;
+	private byte[] openDoor;
+	private byte[] closedDoor;
 
-	public int defaultWall => wall[0];
+	public byte defaultWall => wall[0];
 
-	public int defaultFloor => floor[0];
-	public int defaultCeiling => ceiling[0];
+	public byte defaultFloor => floor[0];
+	public byte defaultCeiling => ceiling[0];
 
-	public int doorClosed => closedDoor[0];
-	public int doorOpen => openDoor[0];
+	public byte doorClosed => closedDoor[0];
+	public byte doorOpen => openDoor[0];
 
 	public bool multipleWalls => wall.Length > 1;
 	public bool multipleFloors => floor.Length > 1;
 	public bool multipleCeilings => ceiling.Length > 1;
 
-	public int rWall(Random r) {
+	public byte rWall(Random r) {
 		return multipleWalls ? wall[r.Next(wall.Length)] : defaultWall;
 	}
 
-	public int rFloor(Random r) {
+	public byte rFloor(Random r) {
 		return multipleFloors ? floor[r.Next(floor.Length)] : defaultFloor;
 	}
 
-	public int rCeiling(Random r) {
+	public byte rCeiling(Random r) {
 		return multipleCeilings ? ceiling[r.Next(floor.Length)] : defaultCeiling;
 	}
 }

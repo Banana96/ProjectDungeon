@@ -1,16 +1,5 @@
 ﻿public partial class DungeonGenerator {
 	private void RemoveDeadEnds() {
-		var corridorBlocks = 0;
-
-		dungeon.ForEachExistingBlock(delegate(Position pos, Block b) {
-			if(!b.areaBlock) {
-				corridorBlocks++;
-			}
-		});
-
-		var max = corridorBlocks * 3 / 4;
-
-		var removedTotal = 0;
 		var removedEnds = 0;
 
 		do {
@@ -21,19 +10,18 @@
 					var adjectives = dungeon.getAdjBlocks(p);
 
 					foreach(var d in Direction.All) {
-						if(adjectives[d.Num] != null) {
-							adjectives[d.Num]
-								.setUnpassable(d.Opposite)
-								.setTexture(d.Opposite);
+						var adj = adjectives[d];
+						if(adj != null) {
+							adj.passable[d.Opposite] = false;
+							adj.textures[d.Opposite] = 0;
 						}
 					}
 
 					dungeon.removeBlock(p);
 
-					removedTotal++;
 					removedEnds++;
 				}
 			});
-		} while(removedEnds > 0 && removedTotal <= max);
+		} while(removedEnds > 0);
 	}
 }

@@ -53,13 +53,17 @@ public partial class DungeonGenerator {
 
 				// Set passable and door texture
 				if(block1 != null && block2 != null) {
-					block1
-						.setPassable(randomEdge.Item2)
-						.setTexture(doorTex, randomEdge.Item2);
+					//block1
+					//	.setPassable(randomEdge.Item2)
+					//	.setTexture(doorTex, randomEdge.Item2);
+					block1.passable[randomEdge.Item2] = true;
+					block1.textures[randomEdge.Item2] = doorTex;
 
-					block2
-						.setPassable(randomEdge.Item2.Opposite)
-						.setTexture(doorTex, randomEdge.Item2.Opposite);
+					//block2
+					//	.setPassable(randomEdge.Item2.Opposite)
+					//	.setTexture(doorTex, randomEdge.Item2.Opposite);
+					block2.passable[randomEdge.Item2.Opposite] = true;
+					block2.textures[randomEdge.Item2.Opposite] = doorTex;
 				} else {
 					Debug.Assert(false, "Selected edge is invalid");
 				}

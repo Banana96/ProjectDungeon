@@ -79,7 +79,7 @@ public class DungeonMeshBuilder {
 	private static void AddBlockMesh(IDictionary<int, List<Mesh>> meshGroup, Position pos) {
 		var block = dungeon.getBlock(pos);
 		if(block != null) {
-			var textures = block.getTextures();
+			var textures = block.textures;
 
 			for(var wall = 0; wall < textures.Length; wall++) {
 				var texture = textures[wall];
@@ -90,7 +90,7 @@ public class DungeonMeshBuilder {
 							texture = dungeon.textures.defaultWall;
 						} else if(wall == 4) {
 							texture = dungeon.textures.defaultFloor;
-						} else { // wall == 5
+						} else if(wall == 5) {
 							texture = dungeon.textures.defaultCeiling;
 						}
 					}

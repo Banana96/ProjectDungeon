@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 public class Attack : EntityRequest {
-	private Direction direction => target as Direction;
+	private Direction dir => target as Direction;
 
 	public Attack(Entity e, Direction dir = null) : base(e, dir) {
 		if(dir == null) {
@@ -10,10 +10,11 @@ public class Attack : EntityRequest {
 	}
 
 	public override bool validateRequest(Dungeon d) {
-		var targetPos = caller.position + direction;
+		var targetPos = caller.position + dir;
 		var callerBlock = d.getBlock(caller.position);
 		if(callerBlock != null) {
-			if(callerBlock.isPassable(direction)) {
+			//if(callerBlock.isPassable(dir)) {
+			if(callerBlock.passable[dir]) {
 				var block = d.getBlock(targetPos);
 
 				if(block != null) {
@@ -30,7 +31,7 @@ public class Attack : EntityRequest {
 	}
 
 	public override void onValid(Dungeon d) {
-		var targetPos = caller.position + direction;
+		var targetPos = caller.position + dir;
 		var targetEntity = d.getEntity(targetPos);
 
 		if(targetEntity != null) {
